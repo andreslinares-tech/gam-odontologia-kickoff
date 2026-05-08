@@ -18,15 +18,15 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
     .toc-link { transition: color 0.15s, border-color 0.15s; }
-    .toc-link:hover { color: rgb(244 244 245); border-left-color: rgb(139 92 246); }
+    .toc-link:hover { color: rgb(255 255 255); border-left-color: rgb(139 92 246); }
     .diagram-card { background: rgba(9, 9, 11, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 32px; }
     .diagram-card svg { display: block; max-width: 100%; height: auto; }
     .action-card { background: rgba(9, 9, 11, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 20px; position: relative; }
     .action-card + .action-card { margin-top: 12px; }
-    .action-card .label { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: rgb(113 113 122); }
-    .action-card .value-strong { color: rgb(228 228 231); font-weight: 500; }
-    .action-card .value-mono { color: rgb(228 228 231); font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; }
-    .action-card .value-desc { color: rgb(212 212 216); font-size: 12px; line-height: 1.65; }
+    .action-card .label { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; color: rgb(255 255 255); }
+    .action-card .value-strong { color: rgb(255 255 255); font-weight: 500; }
+    .action-card .value-mono { color: rgb(255 255 255); font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; }
+    .action-card .value-desc { color: rgb(255 255 255); font-size: 12px; line-height: 1.65; }
     .action-grid { display: grid; grid-template-columns: 220px 1fr; gap: 14px 18px; align-items: start; }
     @media (max-width: 768px) { .action-grid { grid-template-columns: 1fr; gap: 4px; } }
     .pendiente-row { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: start; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
@@ -37,40 +37,86 @@
     .pill-cyan { background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); color: rgb(165, 243, 252); }
     .pill-emerald { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: rgb(167, 243, 208); }
     .pill-rose { background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.3); color: rgb(253, 164, 175); }
+
+    /* Botón "Copiar" para prompt blocks (heredado de BLUEPRINT) */
+    .prompt-block {
+      background: rgba(15, 12, 28, 0.6);
+      border: 1px solid rgba(139, 92, 246, 0.18);
+      border-left: 3px solid rgba(139, 92, 246, 0.5);
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: rgb(255, 255, 255);
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .prompt-wrap { position: relative; }
+    .prompt-wrap .prompt-block { padding-top: 42px; }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      color: rgb(196, 181, 253);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s;
+      opacity: 0.85;
+      z-index: 2;
+    }
+    .copy-btn:hover { opacity: 1; background: rgba(139, 92, 246, 0.28); }
+    .copy-btn:active { transform: translateY(1px); }
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: rgb(167, 243, 208);
+      opacity: 1;
+    }
+    .copy-btn svg { width: 13px; height: 13px; }
+    @media print { .copy-btn { display: none; } }
   </style>
 </head>
-<body class="bg-[#0a0a0b] text-zinc-100 antialiased grain min-h-screen relative">
+<body class="bg-[#26262a] text-white antialiased grain min-h-screen relative">
 
 <div class="fixed inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(139, 92, 246, 0.08), transparent 60%);"></div>
 
 <div class="relative max-w-[1400px] mx-auto flex">
 
   <!-- TOC sidebar -->
-  <aside class="hidden lg:block w-60 shrink-0 sticky top-0 h-screen pt-20 px-6 overflow-y-auto">
-    <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 mb-5">Kickoff · 29 abr</p>
+  <aside class="hidden lg:block w-60 shrink-0 sticky top-0 h-screen pt-20 px-6 overflow-y-auto bg-[#18181b] border-r border-white/[0.08] shadow-[1px_0_0_rgba(255,255,255,0.02)]">
+    <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white mb-5">Kickoff · 29 abr</p>
     <nav class="space-y-0.5">
-      <a href="#arquitectura" class="toc-link block py-2 px-3 text-sm text-zinc-400 border-l border-transparent">01 · Arquitectura</a>
-      <a href="#pipeline" class="toc-link block py-2 px-3 text-sm text-zinc-400 border-l border-transparent">02 · Pipeline comercial</a>
-      <a href="#bot" class="toc-link block py-2 px-3 text-sm text-zinc-400 border-l border-transparent">03 · Bot Athena</a>
-      <a href="#decisiones" class="toc-link block py-2 px-3 text-sm text-zinc-400 border-l border-transparent">04 · Decisiones</a>
-      <a href="#pendientes" class="toc-link block py-2 px-3 text-sm text-zinc-400 border-l border-transparent">05 · Pendientes</a>
-      <a href="#cronograma" class="toc-link block py-2 px-3 text-sm text-zinc-400 border-l border-transparent">06 · Cronograma</a>
+      <a href="#arquitectura" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">01 · Arquitectura</a>
+      <a href="#pipeline" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">02 · Pipeline comercial</a>
+      <a href="#bot" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">03 · Bot Athena</a>
+      <a href="#decisiones" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">04 · Decisiones</a>
+      <a href="#pendientes" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">05 · Pendientes</a>
+      <a href="#cronograma" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">06 · Cronograma</a>
     </nav>
 
     <div class="mt-10 pt-6 border-t border-white/[0.06]">
-      <p class="font-mono text-[10px] uppercase tracking-wider text-zinc-500 mb-2">Cliente</p>
-      <p class="text-sm text-zinc-300">GAM Odontología</p>
-      <p class="text-xs text-zinc-500">Athena · Stefi · Diego</p>
+      <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">Cliente</p>
+      <p class="text-sm text-white">GAM Odontología</p>
+      <p class="text-xs text-white">Athena · Stefi · Diego</p>
     </div>
     <div class="mt-4">
-      <p class="font-mono text-[10px] uppercase tracking-wider text-zinc-500 mb-2">Stack</p>
-      <p class="text-sm text-zinc-300">GHL · App Level</p>
-      <p class="text-xs text-zinc-500">Conversation AI V2 · WhatsApp coexistencia</p>
+      <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">Stack</p>
+      <p class="text-sm text-white">GHL · App Level</p>
+      <p class="text-xs text-white">Conversation AI V2 · WhatsApp coexistencia</p>
     </div>
     <div class="mt-4">
-      <p class="font-mono text-[10px] uppercase tracking-wider text-zinc-500 mb-2">Equipo</p>
-      <p class="text-sm text-zinc-300">Andy · Axel</p>
-      <p class="text-xs text-zinc-500">AL Consulting</p>
+      <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">Equipo</p>
+      <p class="text-sm text-white">Andy · Axel</p>
+      <p class="text-xs text-white">AL Consulting</p>
     </div>
   </aside>
 
@@ -80,32 +126,32 @@
     <header class="mb-20">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-2 h-2 rounded-full bg-violet-400 animate-pulse"></div>
-        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500">Reunión 1 · Kickoff · 29 abr 2026</p>
+        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white">Reunión 1 · Kickoff · 29 abr 2026</p>
       </div>
       <h1 class="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
         Bot Athena<br>
-        <span class="text-zinc-500">para GAM Odontología</span>
+        <span class="text-white">para GAM Odontología</span>
       </h1>
-      <p class="mt-6 text-lg text-zinc-400 max-w-2xl leading-relaxed">
+      <p class="mt-6 text-lg text-white max-w-2xl leading-relaxed">
         1 canal WhatsApp · 1 bot IA · 8 etapas de pipeline · 4 condiciones de handoff · seña 50% como filtro de calificación. Próxima reunión: miércoles 06 may 2026.
       </p>
     </header>
 
     <!-- 01 · Arquitectura -->
     <section id="arquitectura" class="mb-24 scroll-mt-12">
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3">01 · Arquitectura</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">01 · Arquitectura</p>
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Arquitectura macro del sistema</h2>
-      <p class="serif-italic text-zinc-400 mb-8 max-w-3xl">Coexistencia WhatsApp: Athena humana sigue usando su celular y el bot trabaja en paralelo desde GHL. 1 canal, 1 bot, 1 humano que cierra.</p>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Coexistencia WhatsApp: Athena humana sigue usando su celular y el bot trabaja en paralelo desde GHL. 1 canal, 1 bot, 1 humano que cierra.</p>
 
       <div class="diagram-card">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 580" width="100%" role="img">
           <text x="540" y="22" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-size="14" fill="#9CA3AF">Coexistencia WhatsApp · Athena humana en celular + bot en paralelo desde GHL</text>
-          <text x="540" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-weight="600" font-size="15" fill="#E5E7EB">Flujo de un lead nuevo desde campaña hasta turno confirmado</text>
+          <text x="540" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-weight="600" font-size="15" fill="#E5E7EB">Flujo de un lead nuevo desde WhatsApp hasta turno confirmado</text>
 
-          <!-- Campañas -->
+          <!-- Lead nuevo -->
           <rect x="380" y="80" width="320" height="60" rx="12" fill="#1E3A5F" stroke="#2D5A8E" stroke-width="1.2"/>
-          <text x="540" y="106" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="600" font-size="14" fill="#D6E4F4">Campañas Meta Ads</text>
-          <text x="540" y="124" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#9CB6D6">Dirigidas POR TRATAMIENTO (no genéricas)</text>
+          <text x="540" y="106" text-anchor="middle" font-family="-apple-system,sans-serif" font-weight="600" font-size="14" fill="#D6E4F4">Lead escribe por WhatsApp</text>
+          <text x="540" y="124" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#9CB6D6">Único canal · sin filtros de campaña</text>
           <line x1="540" y1="140" x2="540" y2="166" stroke="#4A5568" stroke-width="1.2"/>
 
           <!-- WhatsApp -->
@@ -159,38 +205,38 @@
       <!-- Datos -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
         <div class="rounded-xl bg-zinc-950/40 border border-white/[0.06] p-4">
-          <p class="font-mono text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Canal</p>
-          <p class="text-lg font-semibold text-zinc-100">1</p>
-          <p class="text-[11px] text-zinc-500">WhatsApp coexistencia</p>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-1">Canal</p>
+          <p class="text-lg font-semibold text-white">1</p>
+          <p class="text-[11px] text-white">WhatsApp coexistencia</p>
         </div>
         <div class="rounded-xl bg-zinc-950/40 border border-white/[0.06] p-4">
-          <p class="font-mono text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Bot IA</p>
-          <p class="text-lg font-semibold text-zinc-100">1</p>
-          <p class="text-[11px] text-zinc-500">Athena · Conversation AI V2</p>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-1">Bot IA</p>
+          <p class="text-lg font-semibold text-white">1</p>
+          <p class="text-[11px] text-white">Athena · Conversation AI V2</p>
         </div>
         <div class="rounded-xl bg-zinc-950/40 border border-white/[0.06] p-4">
-          <p class="font-mono text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Humano cierre</p>
-          <p class="text-lg font-semibold text-zinc-100">1</p>
-          <p class="text-[11px] text-zinc-500">Athena humana · recepción</p>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-1">Humano cierre</p>
+          <p class="text-lg font-semibold text-white">1</p>
+          <p class="text-[11px] text-white">Athena humana · recepción</p>
         </div>
         <div class="rounded-xl bg-zinc-950/40 border border-white/[0.06] p-4">
-          <p class="font-mono text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Operación</p>
-          <p class="text-lg font-semibold text-zinc-100">24/7</p>
-          <p class="text-[11px] text-zinc-500">Bot siempre disponible</p>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-1">Operación</p>
+          <p class="text-lg font-semibold text-white">24/7</p>
+          <p class="text-[11px] text-white">Bot siempre disponible</p>
         </div>
       </div>
     </section>
 
     <!-- 02 · Pipeline comercial -->
     <section id="pipeline" class="mb-24 scroll-mt-12">
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3">02 · Pipeline</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">02 · Pipeline</p>
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Pipeline comercial · vista kanban</h2>
-      <p class="serif-italic text-zinc-400 mb-8 max-w-3xl">8 etapas con su trigger de entrada, SLA y custom fields. Filtro de calificación en la etapa 06 (seña enviada): quien paga es lead real, quien no, queda en pipeline para follow-up de Athena.</p>
+      <p class="serif-italic text-white mb-8 max-w-3xl">8 etapas con su trigger de entrada, SLA y custom fields. Filtro de calificación en la etapa 06 (seña enviada): quien paga es lead real, quien no, queda en pipeline para follow-up de Athena.</p>
 
       <div class="rounded-3xl border border-white/[0.06] bg-zinc-950/40 p-6 md:p-8 mb-12">
         <div class="flex items-center justify-between mb-5">
-          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">PIPELINE — 8 etapas</p>
-          <p class="font-mono text-[10px] text-zinc-600">scroll →</p>
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white">PIPELINE — 8 etapas</p>
+          <p class="font-mono text-[10px] text-white">scroll →</p>
         </div>
         <div class="overflow-x-auto pb-3 -mx-6 px-6 md:-mx-8 md:px-8">
           <div class="flex gap-3 items-stretch min-w-max">
@@ -199,122 +245,122 @@
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-violet-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">01</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">Lead nuevo</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">01</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Lead nuevo</h3>
                 <span class="self-start pill pill-violet">Customer Replied · 1er mensaje</span>
                 <span class="self-start pill pill-amber">⏰ Inmediato</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">campaña_origen</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Lead recién entrado desde WhatsApp respondiendo a campaña. Sin clasificar todavía.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Lead recién entrado desde WhatsApp respondiendo a campaña. Sin clasificar todavía.</p>
               </div>
             </div>
-            <div class="flex items-center text-zinc-600 px-1">▸</div>
+            <div class="flex items-center text-white px-1">▸</div>
 
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-violet-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">02</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">En conversación con bot</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">02</span>
+                <h3 class="text-base font-semibold text-white leading-snug">En conversación con bot</h3>
                 <span class="self-start pill pill-violet">Bot Athena empieza a conversar</span>
                 <span class="self-start pill pill-amber">⏰ 1-3 min</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">tipo_consulta</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Bot pregunta motivo y deriva por tipo: odontología general / armonización / implantología.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Bot pregunta motivo y deriva por tipo: odontología general / armonización / implantología.</p>
               </div>
             </div>
-            <div class="flex items-center text-zinc-600 px-1">▸</div>
+            <div class="flex items-center text-white px-1">▸</div>
 
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-violet-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">03</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">FAQs respondidas</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">03</span>
+                <h3 class="text-base font-semibold text-white leading-snug">FAQs respondidas</h3>
                 <span class="self-start pill pill-violet">Bot resuelve dudas con KB</span>
                 <span class="self-start pill pill-amber">⏰ 5-15 min</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">interesado_implantologia</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Bot responde obras sociales, precio consulta, ubicación parcial, info de tratamientos. Esquiva precios.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Bot responde obras sociales, precio consulta, ubicación parcial, info de tratamientos. Esquiva precios.</p>
               </div>
             </div>
-            <div class="flex items-center text-zinc-600 px-1">▸</div>
+            <div class="flex items-center text-white px-1">▸</div>
 
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-violet-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">04</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">Handoff a Athena</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">04</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Handoff a Athena</h3>
                 <span class="self-start pill pill-violet">Bot detecta intención de agendar</span>
                 <span class="self-start pill pill-amber">⏰ Inmediato · alerta a Athena</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">handoff_motivo</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Bot levanta la mano. 4 triggers: agendar · foto · no sabe · paciente regular.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Bot levanta la mano. 4 triggers: agendar · foto · no sabe · paciente regular.</p>
               </div>
             </div>
-            <div class="flex items-center text-zinc-600 px-1">▸</div>
+            <div class="flex items-center text-white px-1">▸</div>
 
             <!-- ZONA HUMANA (azul) 05-08 -->
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-blue-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">05</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">Fecha ofrecida</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">05</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Fecha ofrecida</h3>
                 <span class="self-start pill pill-violet">Athena humana propone horarios</span>
                 <span class="self-start pill pill-amber">⏰ 24 hs</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">fecha_propuesta</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Athena ofrece dos opciones de horario (mañana/tarde). Lead elige cuál le queda mejor.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Athena ofrece dos opciones de horario (mañana/tarde). Lead elige cuál le queda mejor.</p>
               </div>
             </div>
-            <div class="flex items-center text-zinc-600 px-1">▸</div>
+            <div class="flex items-center text-white px-1">▸</div>
 
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-blue-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">06</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">Seña enviada</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">06</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Seña enviada</h3>
                 <span class="self-start pill pill-violet">Athena manda alias</span>
                 <span class="self-start pill pill-rose">🎯 Filtro calificación</span>
                 <span class="self-start pill pill-amber">⏰ 24 hs · seguimiento manual</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">alias_enviado_at</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Lead califica si paga seña $20.000 (50% de $40k). Vía alias o pago presencial.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Lead califica si paga seña $20.000 (50% de $40k). Vía alias o pago presencial.</p>
               </div>
             </div>
-            <div class="flex items-center text-zinc-600 px-1">▸</div>
+            <div class="flex items-center text-white px-1">▸</div>
 
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-blue-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">07</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">Turno confirmado</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">07</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Turno confirmado</h3>
                 <span class="self-start pill pill-violet">Pago de seña recibido</span>
                 <span class="self-start pill pill-amber">⏰ Hasta el turno</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">fecha_turno</span>
                   <span class="pill pill-cyan">monto_seña</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Confirmación + recordatorios automáticos antes del turno. Athena pasa dirección exacta.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Confirmación + recordatorios automáticos antes del turno. Athena pasa dirección exacta.</p>
               </div>
             </div>
-            <div class="flex items-center text-zinc-600 px-1">▸</div>
+            <div class="flex items-center text-white px-1">▸</div>
 
             <div class="flex-shrink-0 w-[260px] rounded-xl bg-[#0f0f0f] border border-white/[0.08] overflow-hidden flex flex-col">
               <div class="h-1.5 bg-emerald-400/80"></div>
               <div class="p-4 flex flex-col gap-2.5 flex-1">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">08</span>
-                <h3 class="text-base font-semibold text-zinc-100 leading-snug">Consulta + diagnóstico</h3>
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">08</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Consulta + diagnóstico</h3>
                 <span class="self-start pill pill-emerald">Visita presencial completada</span>
                 <span class="self-start pill pill-amber">⏰ —</span>
                 <div class="flex flex-wrap gap-1">
                   <span class="pill pill-cyan">tomografia_realizada</span>
                 </div>
-                <p class="text-[11px] text-zinc-500 leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Primera consulta presencial: evaluación + tomografía → recién acá hay presupuesto.</p>
+                <p class="text-[11px] text-white leading-relaxed mt-auto pt-2 border-t border-white/[0.04]">Primera consulta presencial: evaluación + tomografía → recién acá hay presupuesto.</p>
               </div>
             </div>
 
@@ -325,37 +371,37 @@
         <div class="flex items-center gap-6 mt-6 pt-4 border-t border-white/[0.04]">
           <div class="flex items-center gap-2 text-xs">
             <span class="w-3 h-1.5 rounded-sm bg-violet-400/80"></span>
-            <span class="text-zinc-400">Zona Bot · automática</span>
+            <span class="text-white">Zona Bot · automática</span>
           </div>
           <div class="flex items-center gap-2 text-xs">
             <span class="w-3 h-1.5 rounded-sm bg-blue-400/80"></span>
-            <span class="text-zinc-400">Zona humana · Athena</span>
+            <span class="text-white">Zona humana · Athena</span>
           </div>
           <div class="flex items-center gap-2 text-xs">
             <span class="w-3 h-1.5 rounded-sm bg-emerald-400/80"></span>
-            <span class="text-zinc-400">Cierre · ganado</span>
+            <span class="text-white">Cierre · ganado</span>
           </div>
         </div>
       </div>
 
       <!-- Auto follow-up -->
       <div class="diagram-card">
-        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-4">Auto follow-up del bot</p>
+        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-4">Auto follow-up del bot</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-5">
-            <p class="font-mono text-[10px] text-zinc-500 mb-2">+0 min</p>
-            <p class="text-sm text-zinc-300 font-medium mb-1">Lead deja de responder</p>
-            <p class="text-xs text-zinc-500">Bot espera y monitorea inactividad</p>
+            <p class="font-mono text-[10px] text-white mb-2">+0 min</p>
+            <p class="text-sm text-white font-medium mb-1">Lead deja de responder</p>
+            <p class="text-xs text-white">Bot espera y monitorea inactividad</p>
           </div>
           <div class="rounded-xl bg-violet-950/30 border border-violet-400/20 p-5">
             <p class="font-mono text-[10px] text-violet-300/70 mb-2">+2 horas</p>
-            <p class="text-sm text-zinc-100 font-medium mb-1">Primer recordatorio</p>
-            <p class="text-xs text-zinc-400">Bot envía mensaje de seguimiento suave</p>
+            <p class="text-sm text-white font-medium mb-1">Primer recordatorio</p>
+            <p class="text-xs text-white">Bot envía mensaje de seguimiento suave</p>
           </div>
           <div class="rounded-xl bg-violet-950/30 border border-violet-400/20 p-5">
             <p class="font-mono text-[10px] text-violet-300/70 mb-2">+24 horas</p>
-            <p class="text-sm text-zinc-100 font-medium mb-1">Segundo recordatorio</p>
-            <p class="text-xs text-zinc-400">Último intento del bot · luego queda en pipeline para Athena</p>
+            <p class="text-sm text-white font-medium mb-1">Segundo recordatorio</p>
+            <p class="text-xs text-white">Último intento del bot · luego queda en pipeline para Athena</p>
           </div>
         </div>
       </div>
@@ -363,12 +409,12 @@
 
     <!-- 03 · Bot Athena -->
     <section id="bot" class="mb-24 scroll-mt-12">
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3">03 · Bot Athena</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">03 · Bot Athena</p>
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Configuración del bot Athena</h2>
-      <p class="serif-italic text-zinc-400 mb-8 max-w-3xl">Identidad del bot acordada en kickoff. Mismo nombre que la recepcionista humana — handoff transparente, sin aclarar al inicio que es IA.</p>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Identidad del bot acordada en kickoff. Mismo nombre que la recepcionista humana — handoff transparente, sin aclarar al inicio que es IA.</p>
 
       <!-- Identidad -->
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3 mt-2">Identidad</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3 mt-2">Identidad</p>
       <div class="action-card">
         <div class="action-grid">
           <div class="label">Nombre</div>
@@ -387,155 +433,155 @@
       </div>
 
       <!-- Capacidades -->
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3 mt-8">Capacidades</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3 mt-8">Capacidades</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div class="rounded-xl bg-emerald-950/20 border border-emerald-400/20 p-4">
           <p class="text-sm text-emerald-200 font-medium mb-1">✅ Saludar y preguntar motivo</p>
-          <p class="text-[12px] text-zinc-400">Recibe respuesta a campaña y pregunta qué necesita.</p>
+          <p class="text-[12px] text-white">Recibe respuesta a campaña y pregunta qué necesita.</p>
         </div>
         <div class="rounded-xl bg-emerald-950/20 border border-emerald-400/20 p-4">
           <p class="text-sm text-emerald-200 font-medium mb-1">✅ Derivar por tipo de tratamiento</p>
-          <p class="text-[12px] text-zinc-400">General · armonización · implantología.</p>
+          <p class="text-[12px] text-white">General · armonización · implantología.</p>
         </div>
         <div class="rounded-xl bg-emerald-950/20 border border-emerald-400/20 p-4">
           <p class="text-sm text-emerald-200 font-medium mb-1">✅ Responder FAQs con KB</p>
-          <p class="text-[12px] text-zinc-400">Obras sociales · precio consulta · ubicación parcial · tratamientos.</p>
+          <p class="text-[12px] text-white">Obras sociales · precio consulta · ubicación parcial · tratamientos.</p>
         </div>
         <div class="rounded-xl bg-emerald-950/20 border border-emerald-400/20 p-4">
           <p class="text-sm text-emerald-200 font-medium mb-1">✅ Procesar audios entrantes</p>
-          <p class="text-[12px] text-zinc-400">Los analiza y responde con contexto.</p>
+          <p class="text-[12px] text-white">Los analiza y responde con contexto.</p>
         </div>
         <div class="rounded-xl bg-emerald-950/20 border border-emerald-400/20 p-4">
           <p class="text-sm text-emerald-200 font-medium mb-1">✅ Esquivar pedidos de presupuesto</p>
-          <p class="text-[12px] text-zinc-400">Redirige a evaluación presencial + tomografía.</p>
+          <p class="text-[12px] text-white">Redirige a evaluación presencial + tomografía.</p>
         </div>
         <div class="rounded-xl bg-emerald-950/20 border border-emerald-400/20 p-4">
           <p class="text-sm text-emerald-200 font-medium mb-1">✅ Auto follow-up</p>
-          <p class="text-[12px] text-zinc-400">2 horas · 24 horas si deja de responder.</p>
+          <p class="text-[12px] text-white">2 horas · 24 horas si deja de responder.</p>
         </div>
       </div>
 
       <!-- Handoff -->
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3 mt-8">Handoff a Athena humana · 4 condiciones</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3 mt-8">Handoff a Athena humana · 4 condiciones</p>
       <div class="diagram-card">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="rounded-xl bg-blue-950/30 border border-blue-400/20 p-5">
             <div class="flex items-center gap-2 mb-2">
               <span class="w-6 h-6 rounded-full bg-blue-500/30 border border-blue-400/40 flex items-center justify-center text-[11px] font-mono text-blue-200">1</span>
-              <p class="text-sm text-zinc-100 font-semibold">🎯 Intención de agendar</p>
+              <p class="text-sm text-white font-semibold">🎯 Intención de agendar</p>
             </div>
-            <p class="text-[12px] text-zinc-400 leading-relaxed">El paciente expresa que quiere reservar un turno. Athena humana toma la conversación y ofrece fecha + horario concretos.</p>
+            <p class="text-[12px] text-white leading-relaxed">El paciente expresa que quiere reservar un turno. Athena humana toma la conversación y ofrece fecha + horario concretos.</p>
           </div>
           <div class="rounded-xl bg-blue-950/30 border border-blue-400/20 p-5">
             <div class="flex items-center gap-2 mb-2">
               <span class="w-6 h-6 rounded-full bg-blue-500/30 border border-blue-400/40 flex items-center justify-center text-[11px] font-mono text-blue-200">2</span>
-              <p class="text-sm text-zinc-100 font-semibold">📷 Foto / imagen entrante</p>
+              <p class="text-sm text-white font-semibold">📷 Foto / imagen entrante</p>
             </div>
-            <p class="text-[12px] text-zinc-400 leading-relaxed">Imágenes clínicas (radiografías, fotos de muelas) requieren ojo profesional. Bot avisa a Athena, no las interpreta.</p>
+            <p class="text-[12px] text-white leading-relaxed">Imágenes clínicas (radiografías, fotos de muelas) requieren ojo profesional. Bot avisa a Athena, no las interpreta.</p>
           </div>
           <div class="rounded-xl bg-blue-950/30 border border-blue-400/20 p-5">
             <div class="flex items-center gap-2 mb-2">
               <span class="w-6 h-6 rounded-full bg-blue-500/30 border border-blue-400/40 flex items-center justify-center text-[11px] font-mono text-blue-200">3</span>
-              <p class="text-sm text-zinc-100 font-semibold">❓ Bot no sabe responder</p>
+              <p class="text-sm text-white font-semibold">❓ Bot no sabe responder</p>
             </div>
-            <p class="text-[12px] text-zinc-400 leading-relaxed">Prohibido inventar. Si la KB no cubre la pregunta, levanta la mano automáticamente.</p>
+            <p class="text-[12px] text-white leading-relaxed">Prohibido inventar. Si la KB no cubre la pregunta, levanta la mano automáticamente.</p>
           </div>
           <div class="rounded-xl bg-blue-950/30 border border-blue-400/20 p-5">
             <div class="flex items-center gap-2 mb-2">
               <span class="w-6 h-6 rounded-full bg-blue-500/30 border border-blue-400/40 flex items-center justify-center text-[11px] font-mono text-blue-200">4</span>
-              <p class="text-sm text-zinc-100 font-semibold">👤 Paciente regular (no nuevo)</p>
+              <p class="text-sm text-white font-semibold">👤 Paciente regular (no nuevo)</p>
             </div>
-            <p class="text-[12px] text-zinc-400 leading-relaxed">Si NO viene de campaña, el bot ni se activa — va directo a Athena. <span class="text-amber-300">Mecanismo exacto a definir.</span></p>
+            <p class="text-[12px] text-white leading-relaxed">Si NO viene de campaña, el bot ni se activa — va directo a Athena. <span class="text-amber-300">Mecanismo exacto a definir.</span></p>
           </div>
         </div>
       </div>
 
       <!-- Prohibiciones -->
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3 mt-8">Prohibiciones duras</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3 mt-8">Prohibiciones duras</p>
       <div class="diagram-card">
         <div class="space-y-3">
           <div class="flex gap-4 items-start p-4 rounded-xl bg-rose-950/20 border border-rose-400/20">
             <span class="text-2xl">🚫</span>
             <div class="flex-1">
               <p class="text-sm text-rose-200 font-semibold mb-1">No dar precios ni presupuestos de tratamientos</p>
-              <p class="text-[12px] text-zinc-400">Razón: requiere evaluación clínica + tomografía. Mensaje suave: <em>"para elaborar un presupuesto necesitamos una evaluación previa"</em>.</p>
+              <p class="text-[12px] text-white">Razón: requiere evaluación clínica + tomografía. Mensaje suave: <em>"para elaborar un presupuesto necesitamos una evaluación previa"</em>.</p>
             </div>
           </div>
           <div class="flex gap-4 items-start p-4 rounded-xl bg-rose-950/20 border border-rose-400/20">
             <span class="text-2xl">🚫</span>
             <div class="flex-1">
               <p class="text-sm text-rose-200 font-semibold mb-1">No dar dirección exacta (piso/oficina)</p>
-              <p class="text-[12px] text-zinc-400">Solo "Neuquén · planta alta". La dirección completa la entrega Athena humana al confirmar turno. Razón: una reseña negativa pasada por gente que no encontró el local.</p>
+              <p class="text-[12px] text-white">Solo "Neuquén · planta alta". La dirección completa la entrega Athena humana al confirmar turno. Razón: una reseña negativa pasada por gente que no encontró el local.</p>
             </div>
           </div>
           <div class="flex gap-4 items-start p-4 rounded-xl bg-rose-950/20 border border-rose-400/20">
             <span class="text-2xl">🚫</span>
             <div class="flex-1">
               <p class="text-sm text-rose-200 font-semibold mb-1">No inventar respuestas</p>
-              <p class="text-[12px] text-zinc-400">Si la KB no cubre algo, handoff inmediato. Inventar genera desconfianza y errores clínicos.</p>
+              <p class="text-[12px] text-white">Si la KB no cubre algo, handoff inmediato. Inventar genera desconfianza y errores clínicos.</p>
             </div>
           </div>
           <div class="flex gap-4 items-start p-4 rounded-xl bg-rose-950/20 border border-rose-400/20">
             <span class="text-2xl">🚫</span>
             <div class="flex-1">
               <p class="text-sm text-rose-200 font-semibold mb-1">No interpretar imágenes clínicas</p>
-              <p class="text-[12px] text-zinc-400">Riesgo médico-legal. Las analiza pero deriva a Athena humana.</p>
+              <p class="text-[12px] text-white">Riesgo médico-legal. Las analiza pero deriva a Athena humana.</p>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Knowledge Base -->
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3 mt-8">Knowledge Base — qué cargar</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3 mt-8">Knowledge Base — qué cargar</p>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">📋</p>
-          <p class="text-sm text-zinc-200 font-medium">Tratamientos</p>
-          <p class="text-[11px] text-zinc-500">Lista completa con descripción · sin precio</p>
+          <p class="text-sm text-white font-medium">Tratamientos</p>
+          <p class="text-[11px] text-white">Lista completa con descripción · sin precio</p>
         </div>
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">🏥</p>
-          <p class="text-sm text-zinc-200 font-medium">Obras sociales</p>
-          <p class="text-[11px] text-zinc-500">Listado completo aceptadas</p>
+          <p class="text-sm text-white font-medium">Obras sociales</p>
+          <p class="text-[11px] text-white">Listado completo aceptadas</p>
         </div>
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">💰</p>
-          <p class="text-sm text-zinc-200 font-medium">Precio consulta</p>
-          <p class="text-[11px] text-zinc-500">$40.000 · seña $20.000</p>
+          <p class="text-sm text-white font-medium">Precio consulta</p>
+          <p class="text-[11px] text-white">$40.000 · seña $20.000</p>
         </div>
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">📍</p>
-          <p class="text-sm text-zinc-200 font-medium">Ubicación parcial</p>
-          <p class="text-[11px] text-zinc-500">Neuquén · planta alta (sin piso)</p>
+          <p class="text-sm text-white font-medium">Ubicación parcial</p>
+          <p class="text-[11px] text-white">Neuquén · planta alta (sin piso)</p>
         </div>
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">⏰</p>
-          <p class="text-sm text-zinc-200 font-medium">Horarios</p>
-          <p class="text-[11px] text-zinc-500"><span class="text-amber-300">Pendiente</span></p>
+          <p class="text-sm text-white font-medium">Horarios</p>
+          <p class="text-[11px] text-white"><span class="text-amber-300">Pendiente</span></p>
         </div>
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">❓</p>
-          <p class="text-sm text-zinc-200 font-medium">Top 10 FAQs</p>
-          <p class="text-[11px] text-zinc-500">5 ya identificadas · faltan 5</p>
+          <p class="text-sm text-white font-medium">Top 10 FAQs</p>
+          <p class="text-[11px] text-white">5 ya identificadas · faltan 5</p>
         </div>
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">🛡️</p>
-          <p class="text-sm text-zinc-200 font-medium">Objeciones</p>
-          <p class="text-[11px] text-zinc-500">5 con respuesta sugerida</p>
+          <p class="text-sm text-white font-medium">Objeciones</p>
+          <p class="text-[11px] text-white">5 con respuesta sugerida</p>
         </div>
         <div class="rounded-xl bg-zinc-950/60 border border-white/[0.06] p-4">
           <p class="text-2xl mb-2">💬</p>
-          <p class="text-sm text-zinc-200 font-medium">Conversaciones reales</p>
-          <p class="text-[11px] text-zinc-500">Capturas que cerraron · entrenan tono</p>
+          <p class="text-sm text-white font-medium">Conversaciones reales</p>
+          <p class="text-[11px] text-white">Capturas que cerraron · entrenan tono</p>
         </div>
       </div>
     </section>
 
     <!-- 04 · Decisiones -->
     <section id="decisiones" class="mb-24 scroll-mt-12">
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3">04 · Decisiones</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">04 · Decisiones</p>
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Decisiones cerradas en kickoff</h2>
-      <p class="serif-italic text-zinc-400 mb-8 max-w-3xl">Todo lo que está locked-in tras la reunión del 29 de abril y debería ser la base del desarrollo.</p>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Todo lo que está locked-in tras la reunión del 29 de abril y debería ser la base del desarrollo.</p>
 
       <div class="action-card">
         <div class="action-grid">
@@ -580,27 +626,27 @@
 
     <!-- 05 · Pendientes -->
     <section id="pendientes" class="mb-24 scroll-mt-12">
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3">05 · Pendientes</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">05 · Pendientes</p>
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Open loops · pendientes para Reunión 2</h2>
-      <p class="serif-italic text-zinc-400 mb-8 max-w-3xl">Lo que falta resolver antes del demo del miércoles 06 de mayo. Dividido por dueño.</p>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Lo que falta resolver antes del demo del miércoles 06 de mayo. Dividido por dueño.</p>
 
-      <!-- GAM -->
+      <!-- AL -->
       <div class="diagram-card mb-4">
         <div class="flex items-center gap-3 mb-5">
           <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
           <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-rose-300">GAM Odontología · Stefi · Athena</p>
         </div>
         <div class="space-y-0">
-          <div class="pendiente-row"><span class="text-zinc-500">📋</span><span class="text-sm text-zinc-300">Listado completo de <strong class="text-zinc-100">servicios y tratamientos</strong> con descripción breve</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">💰</span><span class="text-sm text-zinc-300">Confirmar <strong class="text-zinc-100">precio consulta</strong> ($40.000) y excepciones</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">🏥</span><span class="text-sm text-zinc-300">Listado completo de <strong class="text-zinc-100">obras sociales aceptadas</strong></span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">⏰</span><span class="text-sm text-zinc-300">Definir <strong class="text-zinc-100">horarios formales de atención</strong> (días/horas)</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">❓</span><span class="text-sm text-zinc-300">5 FAQs adicionales (top 10 total) que faltan</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">🛡️</span><span class="text-sm text-zinc-300">5 <strong class="text-zinc-100">objeciones</strong> con respuestas habituales</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">🔑</span><span class="text-sm text-zinc-300">Compartir <strong class="text-zinc-100">alias bancario</strong> para integrar al bot</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">💬</span><span class="text-sm text-zinc-300">Enviar <strong class="text-zinc-100">3-5 capturas</strong> de conversaciones que llegaron a buen puerto</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">📊</span><span class="text-sm text-zinc-300">Mandar la <strong class="text-zinc-100">estructura de pipeline / columnas</strong> que ya tienen armada (por WhatsApp para feedback)</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">🎙️</span><span class="text-sm text-zinc-300">Decidir si quieren <strong class="text-zinc-100">audio pregrabado</strong> de bienvenida</span></div>
+          <div class="pendiente-row"><span class="text-white">📋</span><span class="text-sm text-white">Listado completo de <strong class="text-white">servicios y tratamientos</strong> con descripción breve</span></div>
+          <div class="pendiente-row"><span class="text-white">💰</span><span class="text-sm text-white">Confirmar <strong class="text-white">precio consulta</strong> ($40.000) y excepciones</span></div>
+          <div class="pendiente-row"><span class="text-white">🏥</span><span class="text-sm text-white">Listado completo de <strong class="text-white">obras sociales aceptadas</strong></span></div>
+          <div class="pendiente-row"><span class="text-white">⏰</span><span class="text-sm text-white">Definir <strong class="text-white">horarios formales de atención</strong> (días/horas)</span></div>
+          <div class="pendiente-row"><span class="text-white">❓</span><span class="text-sm text-white">5 FAQs adicionales (top 10 total) que faltan</span></div>
+          <div class="pendiente-row"><span class="text-white">🛡️</span><span class="text-sm text-white">5 <strong class="text-white">objeciones</strong> con respuestas habituales</span></div>
+          <div class="pendiente-row"><span class="text-white">🔑</span><span class="text-sm text-white">Compartir <strong class="text-white">alias bancario</strong> para integrar al bot</span></div>
+          <div class="pendiente-row"><span class="text-white">💬</span><span class="text-sm text-white">Enviar <strong class="text-white">3-5 capturas</strong> de conversaciones que llegaron a buen puerto</span></div>
+          <div class="pendiente-row"><span class="text-white">📊</span><span class="text-sm text-white">Mandar la <strong class="text-white">estructura de pipeline / columnas</strong> que ya tienen armada (por WhatsApp para feedback)</span></div>
+          <div class="pendiente-row"><span class="text-white">🎙️</span><span class="text-sm text-white">Decidir si quieren <strong class="text-white">audio pregrabado</strong> de bienvenida</span></div>
         </div>
       </div>
 
@@ -611,12 +657,12 @@
           <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-violet-300">AL Consulting · Andy · Axel</p>
         </div>
         <div class="space-y-0">
-          <div class="pendiente-row"><span class="text-zinc-500">📤</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Andy:</strong> enviar template de base de conocimiento por el grupo</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">👥</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Diego:</strong> agregar a Andy al grupo de WhatsApp</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">🔐</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Axel:</strong> enviar accesos al CRM (GHL) por asincrónico</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">📝</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Axel:</strong> revisar pipeline propuesto por Stefi y dar feedback</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">🤖</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Andy + Axel:</strong> definir mecanismo de distinción <em>nuevo vs regular</em> (idea: filtro por frase de campaña)</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">🛠️</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Andy:</strong> desarrollar v0 del bot en GHL para demo en Reunión 2</span></div>
+          <div class="pendiente-row"><span class="text-white">📤</span><span class="text-sm text-white"><strong class="text-white">Andy:</strong> enviar template de base de conocimiento por el grupo</span></div>
+          <div class="pendiente-row"><span class="text-white">👥</span><span class="text-sm text-white"><strong class="text-white">Diego:</strong> agregar a Andy al grupo de WhatsApp</span></div>
+          <div class="pendiente-row"><span class="text-white">🔐</span><span class="text-sm text-white"><strong class="text-white">Axel:</strong> enviar accesos al CRM (GHL) por asincrónico</span></div>
+          <div class="pendiente-row"><span class="text-white">📝</span><span class="text-sm text-white"><strong class="text-white">Axel:</strong> revisar pipeline propuesto por Stefi y dar feedback</span></div>
+          <div class="pendiente-row"><span class="text-white">🤖</span><span class="text-sm text-white"><strong class="text-white">Andy + Axel:</strong> definir mecanismo de distinción <em>nuevo vs regular</em> (idea: filtro por frase de campaña)</span></div>
+          <div class="pendiente-row"><span class="text-white">🛠️</span><span class="text-sm text-white"><strong class="text-white">Andy:</strong> desarrollar v0 del bot en GHL para demo en Reunión 2</span></div>
         </div>
       </div>
 
@@ -627,18 +673,18 @@
           <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">Decisiones a tomar antes del demo</p>
         </div>
         <div class="space-y-0">
-          <div class="pendiente-row"><span class="text-zinc-500">🎙️</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Audio pregrabado vs texto</strong> para mensaje de bienvenida (testear ambos)</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">💬</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Tono final</strong> del esquive de presupuesto (escribir 2-3 variantes y elegir)</span></div>
-          <div class="pendiente-row"><span class="text-zinc-500">📍</span><span class="text-sm text-zinc-300"><strong class="text-zinc-100">Texto exacto</strong> del mensaje "Neuquén · planta alta" sin piso</span></div>
+          <div class="pendiente-row"><span class="text-white">🎙️</span><span class="text-sm text-white"><strong class="text-white">Audio pregrabado vs texto</strong> para mensaje de bienvenida (testear ambos)</span></div>
+          <div class="pendiente-row"><span class="text-white">💬</span><span class="text-sm text-white"><strong class="text-white">Tono final</strong> del esquive de presupuesto (escribir 2-3 variantes y elegir)</span></div>
+          <div class="pendiente-row"><span class="text-white">📍</span><span class="text-sm text-white"><strong class="text-white">Texto exacto</strong> del mensaje "Neuquén · planta alta" sin piso</span></div>
         </div>
       </div>
     </section>
 
     <!-- 06 · Cronograma -->
     <section id="cronograma" class="mb-24 scroll-mt-12">
-      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 mb-3">06 · Cronograma</p>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">06 · Cronograma</p>
       <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Cronograma post-kickoff</h2>
-      <p class="serif-italic text-zinc-400 mb-8 max-w-3xl">5 días hábiles asincrónicos hasta el demo del miércoles 06 de mayo de 2026.</p>
+      <p class="serif-italic text-white mb-8 max-w-3xl">5 días hábiles asincrónicos hasta el demo del miércoles 06 de mayo de 2026.</p>
 
       <div class="diagram-card">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 320" width="100%" role="img">
@@ -672,8 +718,8 @@
           <rect x="450" y="176" width="350" height="18" rx="4" fill="#5B3FA8" stroke="#8B6FD8" stroke-width="1"/>
           <text x="804" y="190" font-family="-apple-system,sans-serif" font-size="10" fill="#D6BCFA">5d</text>
 
-          <!-- GAM -->
-          <text x="20" y="217" font-family="-apple-system,sans-serif" font-weight="600" font-size="11" fill="#9CA3AF">GAM ODONTOLOGÍA</text>
+          <!-- AL -->
+          <text x="20" y="217" font-family="-apple-system,sans-serif" font-weight="600" font-size="11" fill="#9CA3AF">AL ODONTOLOGÍA</text>
           <text x="20" y="239" font-family="-apple-system,sans-serif" font-size="12" fill="#E5E7EB">Stefi/Athena llenan KB + capturas</text>
           <rect x="450" y="226" width="200" height="18" rx="4" fill="#5A2A21" stroke="#A04A38" stroke-width="1"/>
           <text x="654" y="240" font-family="-apple-system,sans-serif" font-size="10" fill="#E0AC9D">3d</text>
@@ -699,27 +745,27 @@
           <div class="w-2 h-2 rounded-full bg-violet-400 animate-pulse"></div>
           <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-violet-300">Próxima reunión</p>
         </div>
-        <p class="text-2xl font-semibold tracking-tight text-zinc-100 mb-1">Reunión 2 · Demo Bot v0 + conexión WhatsApp</p>
-        <p class="text-zinc-400">Miércoles <strong class="text-zinc-200">06 mayo 2026</strong> · misma hora del kickoff</p>
+        <p class="text-2xl font-semibold tracking-tight text-white mb-1">Reunión 2 · Demo Bot v0 + conexión WhatsApp</p>
+        <p class="text-white">Miércoles <strong class="text-white">06 mayo 2026</strong> · misma hora del kickoff</p>
         <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
           <div class="rounded-lg bg-zinc-950/40 border border-white/[0.06] p-3">
-            <p class="text-xs text-zinc-300 font-medium">🔌 Conectar coexistencia</p>
-            <p class="text-[11px] text-zinc-500">Athena conecta su número de WhatsApp al CRM</p>
+            <p class="text-xs text-white font-medium">🔌 Conectar coexistencia</p>
+            <p class="text-[11px] text-white">Athena conecta su número de WhatsApp al CRM</p>
           </div>
           <div class="rounded-lg bg-zinc-950/40 border border-white/[0.06] p-3">
-            <p class="text-xs text-zinc-300 font-medium">🤖 Demo del bot v0</p>
-            <p class="text-[11px] text-zinc-500">Andy presenta primer avance funcional</p>
+            <p class="text-xs text-white font-medium">🤖 Demo del bot v0</p>
+            <p class="text-[11px] text-white">Andy presenta primer avance funcional</p>
           </div>
           <div class="rounded-lg bg-zinc-950/40 border border-white/[0.06] p-3">
-            <p class="text-xs text-zinc-300 font-medium">📊 Cerrar pipeline</p>
-            <p class="text-[11px] text-zinc-500">Revisar columnas y seguimientos finales</p>
+            <p class="text-xs text-white font-medium">📊 Cerrar pipeline</p>
+            <p class="text-[11px] text-white">Revisar columnas y seguimientos finales</p>
           </div>
         </div>
       </div>
     </section>
 
-    <footer class="mt-32 pt-8 border-t border-white/[0.06] text-sm text-zinc-500">
-      <p>Generado a partir del transcript del kickoff <span class="font-mono text-zinc-400">2026-04-29-kickoff-transcript.md</span> · mapeado contra <span class="font-mono text-zinc-400">reunion-1-preguntas.md</span></p>
+    <footer class="mt-32 pt-8 border-t border-white/[0.06] text-sm text-white">
+      <p>Generado a partir del transcript del kickoff <span class="font-mono text-white">2026-04-29-kickoff-transcript.md</span> · mapeado contra <span class="font-mono text-white">reunion-1-preguntas.md</span></p>
       <p class="mt-2 text-xs">2026-04-29 · AL Consulting · GAM Odontología</p>
     </footer>
 
@@ -735,17 +781,51 @@
       if (entry.isIntersecting) {
         const id = entry.target.id;
         tocLinks.forEach(link => {
-          link.classList.remove('text-zinc-100', 'border-violet-500/40');
-          link.classList.add('text-zinc-400', 'border-transparent');
+          link.classList.remove('text-white', 'border-violet-500/40');
+          link.classList.add('text-white', 'border-transparent');
           if (link.getAttribute('href') === '#' + id) {
-            link.classList.add('text-zinc-100', 'border-violet-500/40');
-            link.classList.remove('text-zinc-400', 'border-transparent');
+            link.classList.add('text-white', 'border-violet-500/40');
+            link.classList.remove('text-white', 'border-transparent');
           }
         });
       }
     });
   }, { rootMargin: '-30% 0px -60% 0px' });
   sections.forEach(s => observer.observe(s));
+
+  // Botón "Copiar" en cada .prompt-block (prompts y estructuras pegables a GHL)
+  const COPY_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+  const CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  document.querySelectorAll('.prompt-block').forEach(pre => {
+    const wrap = document.createElement('div');
+    wrap.className = 'prompt-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.title = 'Copiar al portapapeles';
+    btn.setAttribute('aria-label', 'Copiar al portapapeles');
+    btn.innerHTML = COPY_ICON + '<span>Copiar</span>';
+    btn.addEventListener('click', async () => {
+      const text = pre.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } finally { document.body.removeChild(ta); }
+      }
+      btn.classList.add('copied');
+      btn.innerHTML = CHECK_ICON + '<span>Copiado</span>';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = COPY_ICON + '<span>Copiar</span>';
+      }, 1800);
+    });
+    wrap.appendChild(btn);
+  });
 </script>
 
 </body>

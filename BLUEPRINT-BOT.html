@@ -231,7 +231,7 @@
 
   <!-- TOC sidebar -->
   <aside class="hidden lg:block w-60 shrink-0 sticky top-0 h-screen pt-20 px-6 overflow-y-auto bg-[#18181b] border-r border-white/[0.08] shadow-[1px_0_0_rgba(255,255,255,0.02)]">
-    <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white mb-5">Blueprint · v0</p>
+    <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white mb-5">Blueprint · v1</p>
     <nav class="space-y-0.5">
       <a href="#pipeline" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">01 · Pipeline</a>
       <a href="#campos" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">02 · Campos personalizados</a>
@@ -249,6 +249,12 @@
       <a href="#bot-transfer" class="toc-link sub block py-1 px-3 text-white border-l border-transparent">4.7 · Bot Transfer</a>
       <a href="#bot-reserva" class="toc-link sub block py-1 px-3 text-white border-l border-transparent">4.8 · Reserva cita</a>
       <a href="#bot-followup" class="toc-link sub block py-1 px-3 text-white border-l border-transparent">4.9 · Seguimiento</a>
+      <a href="#kb" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">05 · Knowledge Base</a>
+      <a href="#whatsapp" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">06 · WhatsApp Meta</a>
+      <a href="#pricing" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">07 · Pricing</a>
+      <a href="#roadmap" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">08 · Roadmap · 10 fases</a>
+      <a href="#riesgos" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">09 · Riesgos</a>
+      <a href="#next" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">10 · Próximos pasos</a>
     </nav>
 
     <div class="mt-10 pt-6 border-t border-white/[0.06]">
@@ -279,7 +285,7 @@
     <header class="mb-20">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-2 h-2 rounded-full bg-violet-400 animate-pulse"></div>
-        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white">Blueprint operativo · v0 · 06 may 2026</p>
+        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white">Blueprint operativo · v1 · 09 may 2026</p>
       </div>
       <h1 class="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
         Blueprint Bot Athena<br>
@@ -290,10 +296,14 @@
       </p>
       <div class="mt-6 flex flex-wrap gap-2">
         <span class="pill pill-violet">Pipeline · 8 etapas</span>
-        <span class="pill pill-cyan">6 custom fields</span>
-        <span class="pill pill-violet">7 workflows</span>
+        <span class="pill pill-cyan">9 custom fields</span>
+        <span class="pill pill-cyan">12 custom values</span>
+        <span class="pill pill-violet">8 workflows</span>
         <span class="pill pill-violet">4 handoffs</span>
+        <span class="pill pill-cyan">3 KBs</span>
+        <span class="pill pill-amber">7 plantillas Meta</span>
         <span class="pill pill-emerald">Doble entrega · UI + AI Builder</span>
+        <span class="pill pill-emerald">~$124.50 USD/mes</span>
       </div>
     </header>
 
@@ -1914,9 +1924,325 @@ NO transferir si:
 
     </section>
 
+    <!-- ============================================================ -->
+    <!-- 05 · KNOWLEDGE BASE                                            -->
+    <!-- ============================================================ -->
+    <section id="kb" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">05 · Knowledge Base</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">3 KBs vinculadas al bot</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">3 / 7 KBs por bot · 3 / 15 KBs por location. Margen amplio para crecer. Sin API CRUD pública — toda la carga es manual via UI.</p>
+
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300/80 mb-2">KB 1 · Transversal</p>
+          <h3 class="text-base font-semibold text-white mb-2">Web + Rich Text</h3>
+          <p class="text-sm text-white leading-relaxed mb-3">Info general — ubicación pública, equipo, FAQs no-técnicas.</p>
+          <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">Web Crawler</span><span class="pill pill-cyan">Rich Text</span></div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300/80 mb-2">KB 2 · Servicios</p>
+          <h3 class="text-base font-semibold text-white mb-2">Tables CSV</h3>
+          <p class="text-sm text-white leading-relaxed mb-3">15 tratamientos en 3 verticales — general (5) · armonización (5) · implantología (5).</p>
+          <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">CSV UTF-8</span><span class="pill pill-cyan">Smart Table</span></div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300/80 mb-2">KB 3 · Custom Responses</p>
+          <h3 class="text-base font-semibold text-white mb-2">FAQs manuales</h3>
+          <p class="text-sm text-white leading-relaxed mb-3">Datos críticos — precios fijos, obras sociales, ubicación pública, cláusulas de prohibición.</p>
+          <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">Custom Bot Responses</span></div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-white/[0.06] bg-zinc-950/40 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white mb-2">Reglas de higiene CSV</p>
+        <p class="text-sm text-white">UTF-8 (sin BOM) · primera fila = encabezados · sin nulos en <code class="font-mono text-violet-300 text-xs">id</code> ni <code class="font-mono text-violet-300 text-xs">tratamiento</code> · sin fórmulas ocultas · sin celdas combinadas · sin precios reales (regla del bot).</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 06 · WHATSAPP META                                             -->
+    <!-- ============================================================ -->
+    <section id="whatsapp" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">06 · WhatsApp Meta</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">7 plantillas Meta · todas Utility</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">WhatsApp API oficial con Coexistence — Atena sigue usando su celular en paralelo al CRM. Las 7 plantillas en categoría <strong class="not-italic">Utility</strong> (más barata · ~$0.025/msg en Argentina).</p>
+
+      <div class="grid md:grid-cols-2 gap-3 mb-6">
+        <div class="rounded-xl bg-zinc-950/60 border border-amber-500/20 border-l-[3px] border-l-amber-500/50 p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA · WF1</p>
+          <h3 class="text-sm font-semibold text-white mb-1">bienvenida_lead_es</h3>
+          <p class="text-[11px] text-white leading-relaxed">Saludo inicial al entrar lead de campaña Meta Ads.</p>
+        </div>
+        <div class="rounded-xl bg-zinc-950/60 border border-amber-500/20 border-l-[3px] border-l-amber-500/50 p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA · WF2-5</p>
+          <h3 class="text-sm font-semibold text-white mb-1">confirmacion_handoff_es</h3>
+          <p class="text-[11px] text-white leading-relaxed">Mensaje al lead post-handoff a Atena.</p>
+        </div>
+        <div class="rounded-xl bg-zinc-950/60 border border-amber-500/20 border-l-[3px] border-l-amber-500/50 p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA · WF6</p>
+          <h3 class="text-sm font-semibold text-white mb-1">follow_up_2h_es</h3>
+          <p class="text-[11px] text-white leading-relaxed">Primer recordatorio si no responde.</p>
+        </div>
+        <div class="rounded-xl bg-zinc-950/60 border border-amber-500/20 border-l-[3px] border-l-amber-500/50 p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA · WF6</p>
+          <h3 class="text-sm font-semibold text-white mb-1">follow_up_24h_es</h3>
+          <p class="text-[11px] text-white leading-relaxed">Último intento de re-engagement.</p>
+        </div>
+        <div class="rounded-xl bg-zinc-950/60 border border-amber-500/20 border-l-[3px] border-l-amber-500/50 p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA · WF7</p>
+          <h3 class="text-sm font-semibold text-white mb-1">recordatorio_turno_24h_es</h3>
+          <p class="text-[11px] text-white leading-relaxed">Recordatorio 24h pre-cita.</p>
+        </div>
+        <div class="rounded-xl bg-zinc-950/60 border border-amber-500/20 border-l-[3px] border-l-amber-500/50 p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA · WF7</p>
+          <h3 class="text-sm font-semibold text-white mb-1">recordatorio_turno_2h_es</h3>
+          <p class="text-[11px] text-white leading-relaxed">Recordatorio 2h pre-cita.</p>
+        </div>
+        <div class="rounded-xl bg-zinc-950/60 border border-amber-500/20 border-l-[3px] border-l-amber-500/50 p-4 md:col-span-2">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA · WF8</p>
+          <h3 class="text-sm font-semibold text-white mb-1">confirmacion_sena_es</h3>
+          <p class="text-[11px] text-white leading-relaxed">Confirmación tras pago de seña ($20.000).</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-amber-400/20 bg-amber-500/5 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-2">⚠️ Trust Tiering</p>
+        <p class="text-sm text-white">Primeros 30 días: <strong>250 BIC/24h</strong>. Tras 30 días con plantillas alta calidad: auto-upgrade a 1,000 BIC/24h. Si activan Click-to-WhatsApp Ads: 72h gratuitas post-click.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 07 · PRICING                                                   -->
+    <!-- ============================================================ -->
+    <section id="pricing" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">07 · Pricing</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Costos al cliente</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Estimación mensual recurrente. Reseller pricing — incluye markup sobre costo base GHL/Meta.</p>
+
+      <div class="rounded-3xl border border-violet-400/20 bg-violet-500/5 p-8">
+        <table class="step-table">
+          <tbody>
+            <tr><td>GHL plan (a confirmar)</td><td><span class="font-mono text-white">~$97 USD/mes</span></td></tr>
+            <tr><td>WhatsApp API base (reseller)</td><td><span class="font-mono text-white">$20 USD/mes</span></td></tr>
+            <tr><td>Mensajes (~300/mes Utility, AR)</td><td><span class="font-mono text-white">~$7.50 USD/mes</span></td></tr>
+            <tr><td><strong>Total estimado</strong></td><td><span class="font-mono text-emerald-300 font-semibold">~$124.50 USD/mes</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-500/5 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-300/80 mb-2">💡 Optimización</p>
+        <p class="text-sm text-white">Si activan Click-to-WhatsApp Ads en Meta Ads → 72h gratuitas post-click. Aprovechar para nurturing intensivo en primeros 3 días. Ahorro estimado ~30% del costo por mensaje en periodo activo.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 08 · ROADMAP · 10 FASES                                         -->
+    <!-- ============================================================ -->
+    <section id="roadmap" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">08 · Roadmap · 10 fases</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Estado del proyecto</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">7 fases ya completas — solo restan testing pre-launch, go-live y monitoring post-launch. Bot Atena diseñado y los 24 archivos del SETUP listos para cargar en GHL.</p>
+
+      <div class="rounded-3xl border border-white/[0.06] bg-zinc-950/40 p-6 md:p-8">
+        <div class="flex items-center justify-between mb-5">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white">10 FASES — estado actual</p>
+          <p class="font-mono text-[10px] text-white">scroll →</p>
+        </div>
+        <div class="overflow-x-auto pb-3 -mx-6 px-6 md:-mx-8 md:px-8">
+          <div class="flex gap-3 items-stretch min-w-max">
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-emerald-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F1</span>
+              <h3 class="text-sm font-semibold text-white">Discovery</h3>
+              <span class="self-start pill pill-emerald">✅ Completa</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">Reunión 1 + transcript Fathom + respuestas estructuradas.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-emerald-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F2</span>
+              <h3 class="text-sm font-semibold text-white">Pipeline</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">8 etapas en 3 zonas funcionales.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-emerald-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F3</span>
+              <h3 class="text-sm font-semibold text-white">Custom Fields</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">9 CFs · 12 Custom Values · 25 tags.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-emerald-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F4</span>
+              <h3 class="text-sm font-semibold text-white">Workflows</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">8 WFs con doble entrega manual + AI Builder.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-emerald-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F5</span>
+              <h3 class="text-sm font-semibold text-white">Bot Atena</h3>
+              <span class="self-start pill pill-emerald">✅ v0 listo</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">Spec V2 con 3 campos prompt + 4 handoffs.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-emerald-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F6</span>
+              <h3 class="text-sm font-semibold text-white">Knowledge Base</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">3 KBs: transversal + tabla + FAQs.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-emerald-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F7</span>
+              <h3 class="text-sm font-semibold text-white">WhatsApp Meta</h3>
+              <span class="self-start pill pill-emerald">✅ 7 plantillas</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">Todas Utility · listas para crear en GHL.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-amber-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber-300/80">F8</span>
+              <h3 class="text-sm font-semibold text-white">Testing</h3>
+              <span class="self-start pill pill-amber">⏳ Pendiente</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">Smoke tests + /preflight-ghl + /TEST-BOT-GHL.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-amber-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber-300/80">F9</span>
+              <h3 class="text-sm font-semibold text-white">Go-live</h3>
+              <span class="self-start pill pill-amber">⏳ Pendiente</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">Coexistence sync 4-6h + Auto Pilot.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="flex-shrink-0 w-[200px] rounded-xl bg-[#0c0c0c] border border-zinc-500/30 p-4 flex flex-col gap-2">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-300/80">F10</span>
+              <h3 class="text-sm font-semibold text-white">Post-launch</h3>
+              <span class="self-start pill pill-zinc">⏳ Continuo</span>
+              <p class="text-[11px] text-white leading-relaxed mt-auto">Revisión semanal · ajustes KB · v1 prompt.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-6 mt-6 pt-4 border-t border-white/[0.04]">
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-emerald-400/80"></span><span class="text-white">Completas (7)</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-amber-400/80"></span><span class="text-white">Pendientes (3)</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="font-mono text-[10px] text-white">Tiempo restante: 6 días + esperas Meta</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 09 · RIESGOS                                                   -->
+    <!-- ============================================================ -->
+    <section id="riesgos" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">09 · Riesgos</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Riesgos identificados + mitigaciones</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">6 riesgos clave del proyecto con mitigación documentada. Validar todos en Fase 8 (testing pre-launch).</p>
+
+      <div class="rounded-3xl border border-white/[0.06] bg-zinc-950/40 p-6 md:p-8">
+        <table class="step-table">
+          <thead><tr><th>Riesgo</th><th>Mitigación</th></tr></thead>
+          <tbody>
+            <tr><td><strong>tipo_tratamiento como TEXT libre</strong></td><td>Mapeo via tags en WF de routing. Filtros de reporte por tags, no por CFs.</td></tr>
+            <tr><td><strong>Bot cae a "No Sé" si KB vacía</strong></td><td>Cargar las 3 KBs ANTES del go-live. Fase 6 obligatoria.</td></tr>
+            <tr><td><strong>Colisión Stop Bot vs handoff "pedido humano"</strong></td><td>Validar en testing. Trigger Workflow tiene prioridad si la condition se evalúa antes.</td></tr>
+            <tr><td><strong>Coexistence sync 4-6h</strong></td><td>Coordinar ventana con Atena (no en horario pico). App debe quedar abierta.</td></tr>
+            <tr><td><strong>Pacientes regulares vs nuevos</strong></td><td>WF1 filtra por frase de campaña. Si NO viene de campaña, va directo a Atena humana.</td></tr>
+            <tr><td><strong>Trust Tiering 250 BIC/24h primeros 30 días</strong></td><td>Distribuir volumen + plantillas Utility de alta calidad para upgrade automático.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 10 · NEXT                                                       -->
+    <!-- ============================================================ -->
+    <section id="next" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">10 · Próximos pasos</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">7 acciones para go-live</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Sistema completo en SETUP/ — 24 archivos listos. Plan paso a paso en CHECKLIST-IMPLEMENTACION.md.</p>
+
+      <div class="space-y-3">
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">01</span>
+            <div>
+              <h3 class="text-base font-semibold text-white mb-1">Cliente · completar pendientes</h3>
+              <p class="text-sm text-white">Stefi/Atena pasan: alias bancario, horarios formales, listado completo de obras sociales, dirección privada, correo de salida.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">02</span>
+            <div>
+              <h3 class="text-base font-semibold text-white mb-1">Andrés · /preflight-ghl OK</h3>
+              <p class="text-sm text-white">Ejecutar preflight con PIT + Location ID configurados.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">03</span>
+            <div>
+              <h3 class="text-base font-semibold text-white mb-1">Cargar todo en GHL</h3>
+              <p class="text-sm text-white">Seguir <code class="font-mono text-violet-300 text-xs">CHECKLIST-IMPLEMENTACION.md</code> — pipeline → custom values → CFs → workflows → bot → KBs → plantillas Meta.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">04</span>
+            <div>
+              <h3 class="text-base font-semibold text-white mb-1">Meta · aprobación de plantillas</h3>
+              <p class="text-sm text-white">Submit las 7 plantillas — 24-48h de aprobación cada una. En paralelo continuar con otros pasos.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">05</span>
+            <div>
+              <h3 class="text-base font-semibold text-white mb-1">Coexistence sync</h3>
+              <p class="text-sm text-white">Coordinar ventana 4-6h con Atena. Su app móvil debe quedar abierta durante el sync.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">06</span>
+            <div>
+              <h3 class="text-base font-semibold text-white mb-1">Testing pre-launch</h3>
+              <p class="text-sm text-white">Smoke tests + <code class="font-mono text-violet-300 text-xs">/TEST-BOT-GHL</code> + 5 conversaciones reales con Atena supervisando.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-zinc-950/40 border border-white/[0.08] p-5">
+          <div class="flex items-start gap-4">
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">07</span>
+            <div>
+              <h3 class="text-base font-semibold text-white mb-1">Go-live + monitoring</h3>
+              <p class="text-sm text-white">Bot status Auto Pilot · plan de respuesta primeras 24h · revisión semanal primeras 4 semanas · versionar prompt a v1 post 50 conversaciones reales.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="mt-32 pt-8 border-t border-white/[0.06] text-sm text-white">
       <p>Blueprint operativo · construido a partir de <a href="../knowledge/bot-atena-v0.md" class="font-mono text-white hover:text-violet-300 underline-offset-4 hover:underline">bot-atena-v0.md</a> · complemento del <a href="KICKOFF-VISUAL.html" class="font-mono text-white hover:text-violet-300 underline-offset-4 hover:underline">kickoff visual</a></p>
-      <p class="mt-2 text-xs">2026-05-06 · AL Consulting · GAM Odontología</p>
+      <p class="mt-2 text-xs">v1 · 2026-05-09 · AL Consulting · GAM Odontología — extendido con Knowledge Base + WhatsApp Meta + Pricing + Roadmap + Riesgos + Checklist</p>
     </footer>
 
   </main>

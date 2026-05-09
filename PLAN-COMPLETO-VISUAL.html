@@ -1,535 +1,857 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan de Implementación — Clínica GAM Odontología</title>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-<style>
-  :root {
-    --bg: #0f172a;
-    --bg-2: #1e293b;
-    --bg-3: #334155;
-    --text: #e2e8f0;
-    --text-dim: #94a3b8;
-    --text-bright: #f8fafc;
-    --border: #334155;
-    --violeta: #7c3aed;
-    --violeta-soft: #a78bfa;
-    --amarillo: #f59e0b;
-    --celeste: #38bdf8;
-    --celeste-soft: #7dd3fc;
-    --verde: #16a34a;
-    --verde-soft: #86efac;
-    --rojo: #dc2626;
-    --gris: #6b7280;
-    --azul: #3b82f6;
-    --azul-soft: #93c5fd;
-    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan Completo · GAM Odontología · v3.0</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Source+Serif+4:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Geist', system-ui, sans-serif; font-feature-settings: 'cv11', 'ss01'; }
+    .font-mono { font-family: 'Geist Mono', ui-monospace, monospace; }
+    .serif-italic { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; }
+    html { scroll-behavior: smooth; }
+    .grain::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; opacity: 0.012; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .toc-link { transition: color 0.15s, border-color 0.15s; }
+    .toc-link:hover { color: rgb(255 255 255); border-left-color: rgb(139 92 246); }
+    .toc-link.sub { padding-left: 28px; font-size: 12px; }
 
-  /* Layout */
-  .container { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
-  nav.toc {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 24px;
-  }
-  nav.toc-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 24px; flex-wrap: wrap; align-items: center; font-size: 13px; }
-  nav.toc a { color: var(--text-dim); text-decoration: none; padding: 4px 8px; border-radius: 4px; transition: all 0.15s; }
-  nav.toc a:hover { background: var(--bg-3); color: var(--text); }
-  nav.toc .brand { color: var(--text-bright); font-weight: 600; }
+    .diagram-card { background: rgba(9, 9, 11, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 32px; }
 
-  /* Header */
-  header.hero {
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 32px;
-    margin-bottom: 48px;
-  }
-  header h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; color: var(--text-bright); }
-  header .subtitle { font-size: 16px; color: var(--text-dim); margin-bottom: 24px; }
-  header .badges { display: flex; gap: 8px; flex-wrap: wrap; }
-  .badge {
-    background: var(--bg-2); border: 1px solid var(--border);
-    padding: 4px 10px; border-radius: 12px; font-size: 12px;
-    color: var(--text-dim);
-  }
-  .badge.green { background: rgba(22, 163, 74, 0.15); border-color: var(--verde-soft); color: var(--verde-soft); }
-  .badge.violet { background: rgba(124, 58, 237, 0.15); border-color: var(--violeta-soft); color: var(--violeta-soft); }
-  .badge.blue { background: rgba(59, 130, 246, 0.15); border-color: var(--azul-soft); color: var(--azul-soft); }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-family: 'Geist Mono', ui-monospace, monospace; }
+    .pill-violet  { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: rgb(196, 181, 253); }
+    .pill-amber   { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: rgb(252, 211, 77); }
+    .pill-cyan    { background: rgba(6, 182, 212, 0.15);  border: 1px solid rgba(6, 182, 212, 0.3);  color: rgb(165, 243, 252); }
+    .pill-emerald { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: rgb(167, 243, 208); }
+    .pill-rose    { background: rgba(244, 63, 94, 0.15);  border: 1px solid rgba(244, 63, 94, 0.3);  color: rgb(253, 164, 175); }
+    .pill-blue    { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: rgb(147, 197, 253); }
+    .pill-zinc    { background: rgba(113, 113, 122, 0.15); border: 1px solid rgba(113, 113, 122, 0.3); color: rgb(212, 212, 216); }
+    .pill-red     { background: rgba(239, 68, 68, 0.18);  border: 1px solid rgba(239, 68, 68, 0.4);  color: rgb(252, 165, 165); }
 
-  /* Sections */
-  section { margin-bottom: 64px; scroll-margin-top: 70px; }
-  h2 {
-    font-size: 24px; font-weight: 600; margin-bottom: 16px;
-    color: var(--text-bright);
-    padding-bottom: 8px; border-bottom: 1px solid var(--border);
-  }
-  h3 { font-size: 18px; font-weight: 600; margin: 24px 0 12px; color: var(--text); }
-  p, ul, ol { margin-bottom: 12px; }
-  ul, ol { padding-left: 24px; }
-  li { margin-bottom: 4px; }
+    .prompt-block {
+      background: rgba(15, 12, 28, 0.6);
+      border: 1px solid rgba(139, 92, 246, 0.18);
+      border-left: 3px solid rgba(139, 92, 246, 0.5);
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 12px;
+      line-height: 1.65;
+      color: rgb(255, 255, 255);
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .prompt-wrap { position: relative; }
+    .prompt-wrap .prompt-block { padding-top: 42px; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 12px;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      color: rgb(196, 181, 253);
+      padding: 5px 10px; border-radius: 8px;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 11px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 5px;
+      transition: all 0.15s; opacity: 0.85; z-index: 2;
+    }
+    .copy-btn:hover { opacity: 1; background: rgba(139, 92, 246, 0.28); }
+    .copy-btn.copied { background: rgba(16, 185, 129, 0.18); border-color: rgba(16, 185, 129, 0.5); color: rgb(167, 243, 208); opacity: 1; }
+    .copy-btn svg { width: 13px; height: 13px; }
+    @media print { .copy-btn { display: none; } }
 
-  /* Cards grid */
-  .grid { display: grid; gap: 16px; margin: 16px 0; }
-  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); }
+    details.wf-card {
+      background: rgba(9, 9, 11, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      margin-bottom: 14px; overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    details.wf-card[open] { border-color: rgba(139, 92, 246, 0.25); }
+    details.wf-card > summary {
+      padding: 18px 22px; cursor: pointer; list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    details.wf-card > summary::-webkit-details-marker { display: none; }
+    details.wf-card > summary::after {
+      content: '＋'; font-family: 'Geist Mono', monospace;
+      color: rgb(139, 92, 246); font-size: 18px; flex-shrink: 0;
+    }
+    details.wf-card[open] > summary::after { content: '−'; }
+    details.wf-card > .wf-body {
+      padding: 0 22px 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 18px;
+    }
 
-  .card {
-    background: var(--bg-2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 20px;
-    transition: transform 0.15s, border-color 0.15s;
-  }
-  .card:hover { transform: translateY(-2px); border-color: var(--violeta-soft); }
-  .card h4 { font-size: 14px; font-weight: 600; color: var(--text-bright); margin-bottom: 8px; }
-  .card p { font-size: 13px; color: var(--text-dim); margin: 0; }
-  .card .num { font-size: 28px; font-weight: 700; color: var(--text-dim); display: block; margin-bottom: 4px; }
+    .step-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .step-table th {
+      text-align: left; font-family: 'Geist Mono', monospace;
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgb(255, 255, 255); padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-weight: 500;
+    }
+    .step-table td {
+      padding: 12px 14px; vertical-align: top;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: rgb(255, 255, 255); line-height: 1.6;
+    }
+    .step-table td:first-child { font-weight: 500; width: 220px; font-family: 'Geist', sans-serif; }
+    .step-table tr:last-child td { border-bottom: none; }
+    .step-table code {
+      font-family: 'Geist Mono', monospace; font-size: 12px;
+      background: rgba(139, 92, 246, 0.1); padding: 1px 6px;
+      border-radius: 4px; color: rgb(196, 181, 253);
+    }
 
-  .phase-card { position: relative; }
-  .phase-card.done { border-color: var(--verde); }
-  .phase-card.done::before { content: "✓"; position: absolute; top: 12px; right: 12px; color: var(--verde); font-weight: 700; font-size: 16px; }
-  .phase-card.pending { opacity: 0.85; }
-  .phase-card .phase-num { font-size: 11px; color: var(--violeta-soft); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .stage-card {
+      flex-shrink: 0; width: 260px; border-radius: 14px;
+      background: #0f0f0f; border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .stage-card .accent { height: 6px; }
+    .stage-card .body { padding: 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .stage-card .desc {
+      font-size: 11px; color: rgb(255, 255, 255); line-height: 1.55;
+      margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
 
-  /* Mermaid */
-  .mermaid-wrap {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    margin: 16px 0;
-    overflow-x: auto;
-  }
-  .mermaid { display: flex; justify-content: center; }
+    .phase-card {
+      flex-shrink: 0; width: 220px; border-radius: 12px;
+      background: #0c0c0c; border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px; display: flex; flex-direction: column; gap: 6px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .phase-card.done { border-color: rgba(16, 185, 129, 0.3); }
+    .phase-card.pending { opacity: 0.85; }
+    .phase-card:hover { transform: translateY(-2px); }
 
-  /* Tables */
-  table {
-    width: 100%; border-collapse: collapse;
-    background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px;
-    overflow: hidden; margin: 16px 0;
-  }
-  th { background: var(--bg-3); color: var(--text-bright); text-align: left; padding: 10px 14px; font-weight: 600; font-size: 13px; }
-  td { padding: 10px 14px; border-top: 1px solid var(--border); font-size: 13px; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  td code, th code { background: var(--bg); color: var(--celeste-soft); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+    .kb-card {
+      border-radius: 14px; background: rgba(9, 9, 11, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 18px; transition: border-color 0.15s;
+    }
+    .kb-card:hover { border-color: rgba(139, 92, 246, 0.25); }
 
-  /* Code blocks */
-  pre {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    overflow-x: auto;
-    font-size: 12px;
-    margin: 12px 0;
-    position: relative;
-  }
-  code { font-family: "SF Mono", Monaco, Consolas, monospace; }
-  pre code { color: var(--text); }
-  .copy-btn {
-    position: absolute; top: 8px; right: 8px;
-    background: var(--bg-3); color: var(--text); border: 1px solid var(--border);
-    padding: 4px 8px; border-radius: 4px; font-size: 11px;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .copy-btn:hover { background: var(--violeta); border-color: var(--violeta); color: white; }
-  .copy-btn.copied { background: var(--verde); border-color: var(--verde); color: white; }
+    .template-card {
+      border-radius: 12px; background: rgba(9, 9, 11, 0.6);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      border-left: 3px solid rgba(245, 158, 11, 0.5);
+      padding: 14px;
+    }
 
-  /* Pipeline kanban embedded */
-  .kanban { display: flex; gap: 16px; overflow-x: auto; padding: 8px 0 16px; }
-  .kanban-col { flex-shrink: 0; min-width: 280px; }
-  .kanban-col-header { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; padding: 6px 10px; border-radius: 4px; margin-bottom: 8px; }
-  .kanban-col-bot .kanban-col-header { background: rgba(124,58,237,0.15); color: var(--violeta-soft); }
-  .kanban-col-humano .kanban-col-header { background: rgba(59,130,246,0.15); color: var(--celeste-soft); }
-  .kanban-col-cierre .kanban-col-header { background: rgba(22,163,74,0.15); color: var(--verde-soft); }
-  .kanban-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-bottom: 8px; font-size: 12px; }
-  .kanban-card .kc-num { font-weight: 700; color: var(--text-dim); margin-right: 6px; }
-  .kanban-card .kc-resp { font-size: 10px; color: var(--text-dim); float: right; background: var(--bg-3); padding: 1px 6px; border-radius: 3px; }
-  .kanban-card .kc-title { font-weight: 600; color: var(--text-bright); margin-bottom: 6px; }
-  .kanban-card .kc-fields { font-size: 11px; color: var(--celeste-soft); margin-top: 4px; }
-
-  /* Pricing box */
-  .pricing-box {
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(59, 130, 246, 0.05));
-    border: 1px solid var(--violeta-soft);
-    border-radius: 12px;
-    padding: 24px;
-  }
-  .pricing-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-  .pricing-row:last-child { border-bottom: 0; font-weight: 700; color: var(--text-bright); margin-top: 8px; padding-top: 16px; border-top: 2px solid var(--violeta-soft); }
-
-  /* Callouts */
-  .callout {
-    border-left: 3px solid var(--celeste);
-    background: rgba(56, 189, 248, 0.05);
-    padding: 12px 16px;
-    border-radius: 0 6px 6px 0;
-    margin: 16px 0;
-    font-size: 13px;
-  }
-  .callout-warn { border-color: var(--amarillo); background: rgba(245, 158, 11, 0.05); }
-  .callout-good { border-color: var(--verde); background: rgba(22, 163, 74, 0.05); }
-
-  /* Footer */
-  footer { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 48px; color: var(--text-dim); font-size: 13px; text-align: center; }
-
-  /* Scroll bars */
-  ::-webkit-scrollbar { height: 8px; width: 8px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: #475569; }
-
-  @media (max-width: 768px) {
-    header h1 { font-size: 26px; }
-    .container { padding: 24px 16px; }
-    nav.toc-inner { gap: 12px; font-size: 12px; }
-  }
-</style>
+    @media print {
+      body { background: white; color: black; }
+      .toc-link, aside { display: none; }
+      details.wf-card { break-inside: avoid; border-color: #ccc; }
+      details.wf-card[open] > summary::after, details.wf-card > summary::after { display: none; }
+      .pill { border: 1px solid #888; color: #333; background: #f5f5f5; }
+    }
+  </style>
 </head>
-<body>
+<body class="bg-[#26262a] text-white antialiased grain min-h-screen relative">
 
-<nav class="toc">
-  <div class="toc-inner">
-    <span class="brand">GAM Odontología</span>
-    <a href="#overview">Overview</a>
-    <a href="#fases">10 Fases</a>
-    <a href="#pipeline">Pipeline</a>
-    <a href="#cfs">Custom Fields</a>
-    <a href="#bot">Bot Atena</a>
-    <a href="#kb">Knowledge Base</a>
-    <a href="#workflows">Workflows</a>
-    <a href="#whatsapp">WhatsApp</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#riesgos">Riesgos</a>
-  </div>
-</nav>
+<div class="fixed inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(139, 92, 246, 0.08), transparent 60%);"></div>
 
-<div class="container">
+<div class="relative max-w-[1400px] mx-auto flex">
 
-<header class="hero" id="overview">
-  <h1>Plan de Implementación · Clínica GAM Odontología</h1>
-  <p class="subtitle">Sistema comercial completo en Go High Level — Pipeline + CFs + Workflows + Bot Atena + Knowledge Base + WhatsApp API</p>
-  <div class="badges">
-    <span class="badge violet">Neuquén · Argentina</span>
-    <span class="badge blue">B2C · Clínica dental</span>
-    <span class="badge violet">1 bot (Atena)</span>
-    <span class="badge blue">8 etapas pipeline</span>
-    <span class="badge violet">8 workflows</span>
-    <span class="badge blue">9 custom fields</span>
-    <span class="badge blue">3 KBs</span>
-    <span class="badge green">WhatsApp API · Coexistence</span>
-    <span class="badge">Generado 2026-05-09 · Andrés Linares</span>
-  </div>
-</header>
+  <!-- TOC sidebar -->
+  <aside class="hidden lg:block w-60 shrink-0 sticky top-0 h-screen pt-20 px-6 overflow-y-auto bg-[#18181b] border-r border-white/[0.08] shadow-[1px_0_0_rgba(255,255,255,0.02)]">
+    <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white mb-5">Plan Completo · v3.0</p>
+    <nav class="space-y-0.5">
+      <a href="#cliente" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">01 · Cliente</a>
+      <a href="#fases" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">02 · 10 Fases</a>
+      <a href="#pipeline" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">03 · Pipeline</a>
+      <a href="#cfs" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">04 · Custom Fields</a>
+      <a href="#cvs" class="toc-link sub block py-1 px-3 text-white border-l border-transparent">4.1 · Custom Values</a>
+      <a href="#bot" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">05 · Bot Atena</a>
+      <a href="#kb" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">06 · Knowledge Base</a>
+      <a href="#workflows" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">07 · Workflows</a>
+      <a href="#whatsapp" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">08 · WhatsApp Meta</a>
+      <a href="#pricing" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">09 · Pricing</a>
+      <a href="#riesgos" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">10 · Riesgos</a>
+      <a href="#next" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">11 · Próximos pasos</a>
+    </nav>
 
-<!-- ==================== FASES ==================== -->
-<section id="fases">
-  <h2>10 Fases · estado actual</h2>
-
-  <div class="mermaid-wrap">
-    <pre class="mermaid">
-flowchart TB
-  F1["Fase 1<br/>Discovery<br/>✅ COMPLETA"]:::done
-  F2["Fase 2<br/>Pipeline<br/>✅ generado"]:::done
-  F3["Fase 3<br/>Custom Fields + Values<br/>✅ generado"]:::done
-  F4["Fase 4<br/>Workflows<br/>✅ 8 WFs generados"]:::done
-  F5["Fase 5<br/>Bot Conversation AI<br/>✅ bot-atena-v0"]:::done
-  F6["Fase 6<br/>Knowledge Base<br/>✅ 3 KBs generadas"]:::done
-  F7["Fase 7<br/>WhatsApp Templates Meta<br/>✅ 7 plantillas listas"]:::done
-  F8["Fase 8<br/>Testing pre-launch<br/>⏳ pendiente"]:::pending
-  F9["Fase 9<br/>Go-live<br/>⏳ pendiente"]:::pending
-  F10["Fase 10<br/>Post-launch<br/>⏳ continuo"]:::pending
-  F1 --> F2 --> F3 --> F4 --> F5 --> F6 --> F7 --> F8 --> F9 --> F10
-  classDef done fill:#16a34a,color:#fff,stroke:#86efac,stroke-width:2px
-  classDef pending fill:#1e293b,color:#fff,stroke:#475569
-    </pre>
-  </div>
-
-  <div class="grid grid-3">
-    <div class="card phase-card done"><div class="phase-num">Fase 1</div><h4>Discovery</h4><p>Reunión 1 + transcript Fathom + respuestas estructuradas. Ya completa.</p></div>
-    <div class="card phase-card done"><div class="phase-num">Fase 2</div><h4>Pipeline</h4><p>8 etapas en 3 zonas funcionales. <code>pipeline.md</code> + <code>pipeline.html</code> kanban.</p></div>
-    <div class="card phase-card done"><div class="phase-num">Fase 3</div><h4>Custom Fields</h4><p>9 CFs en carpeta "Bot Atena" + 12 Custom Values + 25 tags.</p></div>
-    <div class="card phase-card done"><div class="phase-num">Fase 4</div><h4>Workflows</h4><p>8 WFs con doble entrega (manual UI + AI Builder prompt).</p></div>
-    <div class="card phase-card done"><div class="phase-num">Fase 5</div><h4>Bot Atena</h4><p>Spec V2 completa: prompt 3 campos, 4 handoffs, KB plan.</p></div>
-    <div class="card phase-card done"><div class="phase-num">Fase 6</div><h4>Knowledge Base</h4><p>3 KBs: transversal + tabla servicios CSV + FAQs manuales.</p></div>
-    <div class="card phase-card done"><div class="phase-num">Fase 7</div><h4>WhatsApp Meta</h4><p>7 plantillas Utility listas para crear en GHL.</p></div>
-    <div class="card phase-card pending"><div class="phase-num">Fase 8</div><h4>Testing</h4><p>Smoke tests + /preflight-ghl + /TEST-BOT-GHL.</p></div>
-    <div class="card phase-card pending"><div class="phase-num">Fase 9</div><h4>Go-live</h4><p>Coexistence sync 4-6h + Auto Pilot + entrenamiento Atena.</p></div>
-  </div>
-</section>
-
-<!-- ==================== PIPELINE ==================== -->
-<section id="pipeline">
-  <h2>Pipeline · 8 etapas en 3 zonas</h2>
-
-  <div class="kanban">
-    <div class="kanban-col kanban-col-bot">
-      <div class="kanban-col-header">🤖 Zona 1 · Bot</div>
-      <div class="kanban-card"><span class="kc-num">01</span><span class="kc-resp">Bot</span><div class="kc-title">Lead nuevo</div><div>Customer Replied + filtro campaña Meta</div><div class="kc-fields">campana_origen</div></div>
-      <div class="kanban-card"><span class="kc-num">02</span><span class="kc-resp">Bot</span><div class="kc-title">En conversación</div><div>Bot identifica vertical y captura datos</div><div class="kc-fields">tipo_tratamiento · motivo_consulta · urgencia</div></div>
+    <div class="mt-10 pt-6 border-t border-white/[0.06]">
+      <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">Cliente</p>
+      <p class="text-sm text-white">GAM Odontología</p>
+      <p class="text-xs text-white">Atena · Stefi · Diego</p>
     </div>
-    <div class="kanban-col kanban-col-humano">
-      <div class="kanban-col-header">👤 Zona 2 · Humana (Atena)</div>
-      <div class="kanban-card"><span class="kc-num">03</span><span class="kc-resp">Atena</span><div class="kc-title">Handoff Atena</div><div>4 sub-motivos · Bot Trigger Workflow</div><div class="kc-fields">handoff_motivo</div></div>
-      <div class="kanban-card"><span class="kc-num">04</span><span class="kc-resp">Atena</span><div class="kc-title">Turno confirmado</div><div>Día y hora acordados · alias enviado</div><div class="kc-fields">turno_fecha · alias_enviado_at</div></div>
-      <div class="kanban-card"><span class="kc-num">05</span><span class="kc-resp">Profesional</span><div class="kc-title">Consulta + Diagnóstico</div><div>Cita presencial + tomografía</div></div>
-      <div class="kanban-card"><span class="kc-num">06</span><span class="kc-resp">Atena</span><div class="kc-title">Lead no asiste</div><div>No-show · recontactar 24h</div><div class="kc-fields">motivo_no_asiste</div></div>
-      <div class="kanban-card"><span class="kc-num">07</span><span class="kc-resp">Atena</span><div class="kc-title">Seña enviada</div><div>$20.000 pagados · lead calificado</div><div class="kc-fields">monto_sena</div></div>
+    <div class="mt-4">
+      <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">Stack</p>
+      <p class="text-sm text-white">GHL · App Level</p>
+      <p class="text-xs text-white">Conversation AI V2 · WhatsApp API Coexistence</p>
     </div>
-    <div class="kanban-col kanban-col-cierre">
-      <div class="kanban-col-header">🏁 Zona 3 · Cierre</div>
-      <div class="kanban-card"><span class="kc-num">—</span><span class="kc-resp">Auto GHL</span><div class="kc-title">Ganado</div><div>Tratamiento cerrado y cobrado</div></div>
-      <div class="kanban-card"><span class="kc-num">—</span><span class="kc-resp">Auto GHL</span><div class="kc-title">Perdido</div><div>Lead descartado</div></div>
+    <div class="mt-4">
+      <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">Equipo</p>
+      <p class="text-sm text-white">Andy · Axel</p>
+      <p class="text-xs text-white">AL Consulting</p>
     </div>
-  </div>
+    <div class="mt-4 pt-4 border-t border-white/[0.06]">
+      <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">Docs relacionados</p>
+      <a href="BLUEPRINT-BOT.html" class="text-xs text-violet-300/80 hover:text-violet-200 underline-offset-4 hover:underline block">↗ Blueprint Bot · v0</a>
+      <a href="KICKOFF-VISUAL.html" class="text-xs text-violet-300/80 hover:text-violet-200 underline-offset-4 hover:underline block mt-1">↗ Kickoff visual (R1)</a>
+    </div>
+  </aside>
 
-  <div class="callout">⚠️ Won y Lost se crean automáticamente en GHL. NO crear manualmente — solo documentarlas como salidas.</div>
-</section>
+  <!-- Main content -->
+  <main class="flex-1 px-6 md:px-10 py-12 md:py-20 max-w-[1100px]">
 
-<!-- ==================== CUSTOM FIELDS ==================== -->
-<section id="cfs">
-  <h2>Custom Fields · 9 campos en carpeta "Bot Atena"</h2>
+    <!-- HEADER HERO -->
+    <header class="mb-20">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-2 h-2 rounded-full bg-violet-400 animate-pulse"></div>
+        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white">Plan completo · v3.0 · 09 may 2026</p>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
+        Plan de Implementación<br>
+        <span class="text-white">GAM Odontología</span>
+      </h1>
+      <p class="mt-6 text-lg text-white max-w-2xl leading-relaxed serif-italic">
+        Sistema comercial completo en GHL — pipeline + custom fields + workflows + bot Atena + knowledge base + WhatsApp API. 10 fases, $124.50/mes estimado, 6 días de implementación restantes.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        <span class="pill pill-violet">Neuquén · Argentina</span>
+        <span class="pill pill-blue">B2C · Clínica dental</span>
+        <span class="pill pill-violet">1 bot (Atena)</span>
+        <span class="pill pill-blue">Pipeline · 8 etapas</span>
+        <span class="pill pill-violet">8 workflows</span>
+        <span class="pill pill-cyan">9 custom fields</span>
+        <span class="pill pill-cyan">3 KBs</span>
+        <span class="pill pill-emerald">WhatsApp API · Coexistence</span>
+        <span class="pill pill-amber">7 plantillas Meta</span>
+      </div>
+    </header>
 
-  <table>
-    <thead><tr><th>Field</th><th>Tipo</th><th>Output Example</th><th>Llenado por</th></tr></thead>
-    <tbody>
-      <tr><td><code>tipo_tratamiento</code></td><td>TEXT</td><td>odontología general / armonización facial / implantología</td><td>Bot · Add Contact Info</td></tr>
-      <tr><td><code>motivo_consulta</code></td><td>TEXT</td><td>texto libre 5-15 palabras</td><td>Bot</td></tr>
-      <tr><td><code>urgencia</code></td><td>TEXT</td><td>urgente / moderada / baja / no_mencionada</td><td>Bot</td></tr>
-      <tr><td><code>handoff_motivo</code></td><td>TEXT</td><td>agendar / imagen / no_se / pedido_humano</td><td>Bot</td></tr>
-      <tr><td><code>campana_origen</code></td><td>TEXT</td><td>meta_implantologia / meta_armonizacion / meta_general</td><td>WF 01</td></tr>
-      <tr><td><code>alias_enviado_at</code></td><td>TEXT</td><td>2026-05-09 14:30</td><td>Atena</td></tr>
-      <tr><td><code>turno_fecha</code></td><td>TEXT</td><td>2026-05-15 10:00</td><td>Atena</td></tr>
-      <tr><td><code>monto_sena</code></td><td>TEXT</td><td>20000 / 40000</td><td>WF 08</td></tr>
-      <tr><td><code>motivo_no_asiste</code></td><td>TEXT</td><td>olvidó / urgencia personal / no contesta</td><td>Atena</td></tr>
-    </tbody>
-  </table>
+    <!-- 01 · CLIENTE -->
+    <section id="cliente" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">01 · Cliente</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Datos del proyecto</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Clínica dental en Neuquén con 3 verticales (odontología general, armonización facial, implantología 24h). Atena es la recepcionista humana — el bot se hace pasar por ella, handoff transparente.</p>
 
-  <h3>Custom Values del subaccount (12)</h3>
-  <pre><button class="copy-btn" onclick="copy(this)">Copiar</button><code>correo_de_salida           = info@gam-odontologia.com.ar
+      <div class="diagram-card">
+        <table class="step-table">
+          <tbody>
+            <tr><td>Nombre</td><td>Clínica GAM Odontología</td></tr>
+            <tr><td>Ubicación</td><td>Neuquén, Argentina (planta alta · sin dirección exacta pública)</td></tr>
+            <tr><td>Tipo negocio</td><td><span class="pill pill-blue">B2C</span> Clínica dental</td></tr>
+            <tr><td>Servicios</td><td>Odontología general · Armonización facial · Implantología 24h (servicio estrella)</td></tr>
+            <tr><td>Canal</td><td><span class="pill pill-emerald">WhatsApp API oficial · Coexistence</span></td></tr>
+            <tr><td>Operación</td><td>Bot 24/7 · Atena humana en horario laboral</td></tr>
+            <tr><td>Tono</td><td>Cercano + profesional · tuteo argentino ("dale", "buenísimo", "contame")</td></tr>
+            <tr><td>Equipo cliente</td><td><span class="pill pill-violet">Atena</span> recepcionista · <span class="pill pill-violet">Stefi</span> owner comercial · <span class="pill pill-violet">Diego</span></td></tr>
+            <tr><td>Equipo Inflect</td><td><span class="pill pill-cyan">Andy</span> · <span class="pill pill-cyan">Axel</span> (AL Consulting)</td></tr>
+            <tr><td>Inicio kickoff</td><td>2026-04-29</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 02 · 10 FASES -->
+    <section id="fases" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">02 · 10 Fases</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Roadmap del proyecto</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">7 fases ya completas — solo restan testing pre-launch, go-live y monitoring post-launch. Bot Atena diseñado y los 24 archivos del SETUP listos para cargar en GHL.</p>
+
+      <div class="diagram-card">
+        <div class="flex items-center justify-between mb-5">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white">10 FASES — estado actual</p>
+          <p class="font-mono text-[10px] text-white">scroll →</p>
+        </div>
+        <div class="overflow-x-auto pb-3 -mx-6 px-6 md:-mx-8 md:px-8">
+          <div class="flex gap-3 items-stretch min-w-max">
+
+            <div class="phase-card done">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F1</span>
+              <h3 class="text-sm font-semibold text-white">Discovery</h3>
+              <span class="self-start pill pill-emerald">✅ Completa</span>
+              <p class="text-[11px] text-white leading-relaxed">Reunión 1 + transcript Fathom + respuestas estructuradas.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card done">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F2</span>
+              <h3 class="text-sm font-semibold text-white">Pipeline</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed">8 etapas en 3 zonas funcionales.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card done">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F3</span>
+              <h3 class="text-sm font-semibold text-white">Custom Fields</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed">9 CFs · 12 Custom Values · 25 tags.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card done">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F4</span>
+              <h3 class="text-sm font-semibold text-white">Workflows</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed">8 WFs con doble entrega manual + AI Builder.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card done">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F5</span>
+              <h3 class="text-sm font-semibold text-white">Bot Atena</h3>
+              <span class="self-start pill pill-emerald">✅ v0 listo</span>
+              <p class="text-[11px] text-white leading-relaxed">Spec V2 con 3 campos prompt + 4 handoffs.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card done">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F6</span>
+              <h3 class="text-sm font-semibold text-white">Knowledge Base</h3>
+              <span class="self-start pill pill-emerald">✅ Generado</span>
+              <p class="text-[11px] text-white leading-relaxed">3 KBs: transversal + tabla + FAQs.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card done">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-emerald-300/80">F7</span>
+              <h3 class="text-sm font-semibold text-white">WhatsApp Meta</h3>
+              <span class="self-start pill pill-emerald">✅ 7 plantillas</span>
+              <p class="text-[11px] text-white leading-relaxed">Todas Utility · listas para crear en GHL.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card pending">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber-300/80">F8</span>
+              <h3 class="text-sm font-semibold text-white">Testing</h3>
+              <span class="self-start pill pill-amber">⏳ Pendiente</span>
+              <p class="text-[11px] text-white leading-relaxed">Smoke tests + /preflight-ghl + /TEST-BOT-GHL.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card pending">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber-300/80">F9</span>
+              <h3 class="text-sm font-semibold text-white">Go-live</h3>
+              <span class="self-start pill pill-amber">⏳ Pendiente</span>
+              <p class="text-[11px] text-white leading-relaxed">Coexistence sync 4-6h + Auto Pilot.</p>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="phase-card pending">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber-300/80">F10</span>
+              <h3 class="text-sm font-semibold text-white">Post-launch</h3>
+              <span class="self-start pill pill-zinc">⏳ Continuo</span>
+              <p class="text-[11px] text-white leading-relaxed">Revisión semanal · ajustes KB · v1 prompt.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-6 mt-6 pt-4 border-t border-white/[0.04]">
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-emerald-400/80"></span><span class="text-white">Completas (7)</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-amber-400/80"></span><span class="text-white">Pendientes (3)</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="font-mono text-[10px] text-white">Tiempo estimado restante: 6 días + esperas Meta</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · PIPELINE -->
+    <section id="pipeline" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">03 · Pipeline</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Pipeline comercial · 8 etapas</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Zona bot (01-02) · zona humana Atena (03-07) · cierre auto GHL. El motivo del handoff se trackea por el custom field <code class="font-mono not-italic text-violet-300 text-sm">handoff_motivo</code> (4 valores: agendar / imagen / no_se / pedido_humano).</p>
+
+      <div class="diagram-card">
+        <div class="flex items-center justify-between mb-5">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white">PIPELINE — 8 etapas</p>
+          <p class="font-mono text-[10px] text-white">scroll →</p>
+        </div>
+        <div class="overflow-x-auto pb-3 -mx-6 px-6 md:-mx-8 md:px-8">
+          <div class="flex gap-3 items-stretch min-w-max">
+
+            <div class="stage-card">
+              <div class="accent bg-violet-400/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">01</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Lead nuevo</h3>
+                <span class="self-start pill pill-violet">WF1 · activa Bot Atena</span>
+                <span class="self-start pill pill-amber">⏰ Inmediato</span>
+                <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">campana_origen</span></div>
+                <p class="desc">Lead entró por WhatsApp + filtro campaña Meta Ads. Si no es de campaña, va directo a Atena humana.</p>
+              </div>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="stage-card">
+              <div class="accent bg-violet-400/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">02</span>
+                <h3 class="text-base font-semibold text-white leading-snug">En conversación</h3>
+                <span class="self-start pill pill-violet">Bot identifica vertical</span>
+                <span class="self-start pill pill-amber">⏰ 30 min</span>
+                <div class="flex flex-wrap gap-1">
+                  <span class="pill pill-cyan">tipo_tratamiento</span>
+                  <span class="pill pill-cyan">motivo_consulta</span>
+                  <span class="pill pill-cyan">urgencia</span>
+                </div>
+                <p class="desc">Bot Atena identifica entre general/armonización/implantología, captura motivo y urgencia, responde FAQs con KB.</p>
+              </div>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="stage-card">
+              <div class="accent bg-blue-400/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">03</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Handoff Atena</h3>
+                <span class="self-start pill pill-blue">WF2-5 · 4 motivos</span>
+                <span class="self-start pill pill-amber">⏰ 2h horario laboral</span>
+                <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">handoff_motivo</span></div>
+                <p class="desc">Atena humana toma. 4 sub-motivos: agendar / imagen / no_se / pedido_humano. Bot se pausa.</p>
+              </div>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="stage-card">
+              <div class="accent bg-blue-400/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">04</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Turno confirmado</h3>
+                <span class="self-start pill pill-blue">Atena coordina · alias</span>
+                <span class="self-start pill pill-amber">⏰ 24h pre-cita</span>
+                <div class="flex flex-wrap gap-1">
+                  <span class="pill pill-cyan">turno_fecha</span>
+                  <span class="pill pill-cyan">alias_enviado_at</span>
+                </div>
+                <p class="desc">Día/hora acordados. Atena envía alias bancario para seña. Recordatorios automáticos 24h y 2h.</p>
+              </div>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="stage-card">
+              <div class="accent bg-blue-400/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">05</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Consulta + Diagnóstico</h3>
+                <span class="self-start pill pill-blue">Profesional</span>
+                <span class="self-start pill pill-amber">⏰ Inmediato post-cita</span>
+                <p class="desc">Cita presencial + tomografía. Recién acá se elabora presupuesto. El bot NUNCA da presupuestos por chat.</p>
+              </div>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="stage-card">
+              <div class="accent bg-amber-400/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">06</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Lead no asiste</h3>
+                <span class="self-start pill pill-amber">⚠️ No-show</span>
+                <span class="self-start pill pill-amber">⏰ Recontactar 24h</span>
+                <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">motivo_no_asiste</span></div>
+                <p class="desc">Atena recontacta para reprogramar. Si no responde en 7 días → mover a Perdido.</p>
+              </div>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="stage-card">
+              <div class="accent bg-emerald-400/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">07</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Seña enviada</h3>
+                <span class="self-start pill pill-emerald">🎯 Lead calificado</span>
+                <span class="self-start pill pill-amber">⏰ Inmediato</span>
+                <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">monto_sena</span></div>
+                <p class="desc">Paciente paga seña ($20.000 = 50% de $40k consulta). Confirmación automática.</p>
+              </div>
+            </div>
+            <div class="flex items-center text-white px-1">▸</div>
+
+            <div class="stage-card">
+              <div class="accent bg-zinc-500/80"></div>
+              <div class="body">
+                <span class="font-mono text-[10px] uppercase tracking-wider text-white">—</span>
+                <h3 class="text-base font-semibold text-white leading-snug">Ganado / Perdido</h3>
+                <span class="self-start pill pill-zinc">Auto GHL</span>
+                <p class="desc">Etapas auto-creadas por GHL. NO crear manualmente. Salidas finales del pipeline.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-6 mt-6 pt-4 border-t border-white/[0.04]">
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-violet-400/80"></span><span class="text-white">Zona Bot</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-blue-400/80"></span><span class="text-white">Zona humana · Atena</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-amber-400/80"></span><span class="text-white">No-show</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-emerald-400/80"></span><span class="text-white">Calificado</span></div>
+          <div class="flex items-center gap-2 text-xs"><span class="w-3 h-1.5 rounded-sm bg-zinc-500/80"></span><span class="text-white">Cierre auto</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · CUSTOM FIELDS -->
+    <section id="cfs" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">04 · Custom Fields</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">9 Custom Fields · carpeta "Bot Atena"</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Todos los CFs son <strong class="not-italic">Single Line Text</strong> porque los maneja el bot. Filtros de reporte se hacen con tags, no con CFs (porque son texto libre y pueden tener variantes).</p>
+
+      <div class="diagram-card">
+        <div class="overflow-x-auto">
+          <table class="step-table" style="min-width: 720px;">
+            <thead>
+              <tr><th>Field</th><th>Field Key</th><th>Output Example</th><th>Llenado por</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Tipo Tratamiento</td><td><code>contact.tipo_tratamiento</code></td><td>odontología general · armonización · implantología</td><td><span class="pill pill-violet">Bot</span></td></tr>
+              <tr><td>Motivo Consulta</td><td><code>contact.motivo_consulta</code></td><td>texto libre 5-15 palabras</td><td><span class="pill pill-violet">Bot</span></td></tr>
+              <tr><td>Urgencia</td><td><code>contact.urgencia</code></td><td>urgente · moderada · baja · no_mencionada</td><td><span class="pill pill-violet">Bot</span></td></tr>
+              <tr><td>Handoff Motivo</td><td><code>contact.handoff_motivo</code></td><td>agendar · imagen · no_se · pedido_humano</td><td><span class="pill pill-violet">Bot</span></td></tr>
+              <tr><td>Campaña Origen</td><td><code>contact.campana_origen</code></td><td>meta_implantologia · meta_armonizacion · meta_general</td><td><span class="pill pill-cyan">WF 01</span></td></tr>
+              <tr><td>Alias Enviado At</td><td><code>contact.alias_enviado_at</code></td><td>2026-05-09 14:30</td><td><span class="pill pill-blue">Atena</span></td></tr>
+              <tr><td>Turno Fecha</td><td><code>contact.turno_fecha</code></td><td>2026-05-15 10:00</td><td><span class="pill pill-blue">Atena</span></td></tr>
+              <tr><td>Monto Seña</td><td><code>contact.monto_sena</code></td><td>20000 · 40000</td><td><span class="pill pill-cyan">WF 08</span></td></tr>
+              <tr><td>Motivo No Asiste</td><td><code>contact.motivo_no_asiste</code></td><td>olvidó · urgencia personal · no contesta</td><td><span class="pill pill-blue">Atena</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4.1 · CUSTOM VALUES -->
+    <section id="cvs" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">4.1 · Custom Values</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">12 Custom Values del subaccount</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Variables a nivel <strong class="not-italic">subaccount</strong> (sintaxis <code class="font-mono not-italic text-violet-300 text-sm">{{custom_values.X}}</code>). Distintas a Custom Fields. Centralizan info constante — si cambia el email, se cambia en un solo lugar.</p>
+
+      <div class="prompt-wrap mb-4">
+        <button class="copy-btn" onclick="copyBlock(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span class="copy-text">Copiar</span>
+        </button>
+        <pre class="prompt-block">correo_de_salida           = info@gam-odontologia.com.ar
 nombre_remitente           = Atena · Clínica GAM Odontología
 nombre_negocio             = Clínica GAM Odontología
 direccion_publica          = Neuquén · planta alta
 direccion_privada          = (confirmar con cliente)
 telefono_contacto          = (confirmar)
-horario_atencion           = (confirmar)
+horario_atencion           = (confirmar — Stefi mencionó "no 6 PM ni 8 PM")
 consulta_precio            = 40000
 sena_monto                 = 20000
 alias_bancario             = (Atena debe pasar)
 obras_sociales_aceptadas   = (Atena debe pasar listado)
-link_instagram             = https://instagram.com/gamodontologia</code></pre>
-</section>
+link_instagram             = https://instagram.com/gamodontologia</pre>
+      </div>
 
-<!-- ==================== BOT ==================== -->
-<section id="bot">
-  <h2>Bot Atena · arquitectura</h2>
+      <div class="rounded-2xl border border-amber-400/20 bg-amber-500/5 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-2">⚠️ Pendientes del cliente</p>
+        <p class="text-sm text-white">5 de los 12 custom values pendientes. Bloqueante para go-live: <span class="pill pill-amber">alias_bancario</span> <span class="pill pill-amber">horario_atencion</span> <span class="pill pill-amber">obras_sociales_aceptadas</span> <span class="pill pill-amber">direccion_privada</span> <span class="pill pill-amber">correo_de_salida</span>.</p>
+      </div>
+    </section>
 
-  <div class="mermaid-wrap">
-    <pre class="mermaid">
-flowchart TB
-  IN["Customer Replied<br/>(WhatsApp + filtro campaña)"]:::trigger
-  WF1["WF 01<br/>Lead nuevo"]:::wf
-  BOT["Bot Atena<br/>(Conversation AI V2)"]:::bot
-  G1["Goal 1<br/>Capture tipo_tratamiento"]:::goal
-  G2["Goal 2<br/>Responder FAQs<br/>vía KB"]:::goal
-  G3["Goal 3<br/>Handoff a Atena"]:::goal
-  HO1["WF 02<br/>Handoff Agendar"]:::wf
-  HO2["WF 03<br/>Handoff Imagen"]:::wf
-  HO3["WF 04<br/>Handoff No Sé"]:::wf
-  HO4["WF 05<br/>Pedido Humano<br/>(tag-triggered)"]:::wf
-  HUM["Atena humana<br/>(WhatsApp Coexistence)"]:::human
+    <!-- 05 · BOT ATENA -->
+    <section id="bot" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">05 · Bot Atena</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Conversation AI V2 · spec completa</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Bot personalizado como Atena humana — handoff transparente. Modelo recomendado <strong class="not-italic">GPT-4.1</strong>. 4 condiciones de handoff, 9 custom fields capturados, 3 KBs vinculadas. Detalle completo en <a href="BLUEPRINT-BOT.html" class="text-violet-300 hover:underline">BLUEPRINT-BOT.html</a>.</p>
 
-  IN --> WF1 --> BOT
-  BOT --> G1
-  G1 --> G2
-  G2 --> G3
-  G3 --> HO1 & HO2 & HO3 & HO4
-  HO1 & HO2 & HO3 & HO4 --> HUM
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div class="kb-card">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mb-2">Personalidad</p>
+          <p class="text-sm text-white leading-relaxed">Cercano + profesional · tuteo argentino · usa modismos como "dale", "perfecto", "buenísimo", "contame". Se hace pasar por Atena humana sin admitir ser bot proactivamente.</p>
+        </div>
+        <div class="kb-card">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mb-2">Objetivo</p>
+          <p class="text-sm text-white leading-relaxed">Calificar leads en 3 verticales y derivar a Atena humana en 4 momentos: agendar turno · imagen recibida · pregunta fuera de KB · pedido directo de humano.</p>
+        </div>
+        <div class="kb-card">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-rose-300/80 mb-2">Reglas duras (NO)</p>
+          <p class="text-sm text-white leading-relaxed">NO da precios de tratamientos · NO da dirección exacta · NO interpreta fotos clínicas · NO inventa información · NO admite ser IA proactivamente.</p>
+        </div>
+        <div class="kb-card">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-300/80 mb-2">Modelo</p>
+          <p class="text-sm text-white leading-relaxed"><strong>GPT-4.1</strong> recomendado por experiencia operativa. GPT-5 alucina más en bots Conversation AI según testing real con clientes.</p>
+        </div>
+      </div>
 
-  classDef trigger fill:#1e293b,stroke:#3b82f6,color:#fff,stroke-width:2px
-  classDef wf fill:#374151,stroke:#9ca3af,color:#fff
-  classDef bot fill:#7c3aed,stroke:#a78bfa,color:#fff,stroke-width:2px
-  classDef goal fill:#0891b2,stroke:#67e8f9,color:#fff
-  classDef human fill:#16a34a,stroke:#86efac,color:#fff,stroke-width:2px
-    </pre>
-  </div>
+      <div class="rounded-2xl border border-violet-400/20 bg-violet-500/5 p-5 mb-6">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mb-3">4 condiciones de handoff (motivos)</p>
+        <div class="grid md:grid-cols-4 gap-3">
+          <div><span class="pill pill-blue">handoff_motivo = agendar</span><p class="text-[11px] text-white mt-2 leading-relaxed">"quiero sacar turno", "agendame"</p></div>
+          <div><span class="pill pill-blue">handoff_motivo = imagen</span><p class="text-[11px] text-white mt-2 leading-relaxed">paciente envía foto/video</p></div>
+          <div><span class="pill pill-blue">handoff_motivo = no_se</span><p class="text-[11px] text-white mt-2 leading-relaxed">bot no encuentra respuesta en KB</p></div>
+          <div><span class="pill pill-blue">handoff_motivo = pedido_humano</span><p class="text-[11px] text-white mt-2 leading-relaxed">"quiero hablar con persona"</p></div>
+        </div>
+      </div>
+    </section>
 
-  <div class="grid grid-2">
-    <div class="card">
-      <h4>Personalidad</h4>
-      <p>Cercano + profesional · tuteo argentino · usa modismos como "dale", "perfecto", "buenísimo". Se hace pasar por Atena humana — handoff transparente.</p>
-    </div>
-    <div class="card">
-      <h4>Objetivo</h4>
-      <p>Calificar leads en 3 verticales (general / armonización / implantología) y derivar a Atena humana en 4 momentos: agendar / imagen / no sé / pedido humano.</p>
-    </div>
-    <div class="card">
-      <h4>Reglas duras</h4>
-      <p>NO da precios de tratamientos · NO da dirección exacta · NO interpreta fotos clínicas · NO inventa información.</p>
-    </div>
-    <div class="card">
-      <h4>Modelo</h4>
-      <p><strong>GPT-4.1</strong> recomendado. GPT-5 alucina más en bots Conversation AI según experiencia operativa.</p>
-    </div>
-  </div>
-</section>
+    <!-- 06 · KNOWLEDGE BASE -->
+    <section id="kb" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">06 · Knowledge Base</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">3 KBs vinculadas al bot</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">3 / 7 KBs por bot · 3 / 15 KBs por location. Margen amplio para crecer. Sin API CRUD pública — toda la carga es manual via UI.</p>
 
-<!-- ==================== KB ==================== -->
-<section id="kb">
-  <h2>Knowledge Base · 3 KBs</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="kb-card">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300/80 mb-2">KB 1 · Transversal</p>
+          <h3 class="text-base font-semibold text-white mb-2">Web + Rich Text</h3>
+          <p class="text-sm text-white leading-relaxed mb-3">Info general — ubicación, equipo, FAQs no-técnicas.</p>
+          <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">Web Crawler</span><span class="pill pill-cyan">Rich Text</span></div>
+        </div>
+        <div class="kb-card">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300/80 mb-2">KB 2 · Servicios</p>
+          <h3 class="text-base font-semibold text-white mb-2">Tables CSV</h3>
+          <p class="text-sm text-white leading-relaxed mb-3">15 tratamientos en 3 verticales — general (5) · armonización (5) · implantología (5).</p>
+          <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">CSV UTF-8</span><span class="pill pill-cyan">Smart Table</span></div>
+        </div>
+        <div class="kb-card">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300/80 mb-2">KB 3 · Custom Responses</p>
+          <h3 class="text-base font-semibold text-white mb-2">FAQs manuales</h3>
+          <p class="text-sm text-white leading-relaxed mb-3">Datos críticos — precios fijos, obras sociales, ubicación pública, cláusulas de prohibición.</p>
+          <div class="flex flex-wrap gap-1"><span class="pill pill-cyan">Custom Bot Responses</span></div>
+        </div>
+      </div>
+    </section>
 
-  <div class="grid grid-3">
-    <div class="card">
-      <h4>KB-Transversal</h4>
-      <p><strong>Web Crawler</strong>: gam-odontologia.com.ar (All URLs in Domain).</p>
-      <p><strong>Rich Text</strong>: bios profesionales (pendiente de Stefi).</p>
-    </div>
-    <div class="card">
-      <h4>KB-Servicios-Tabla</h4>
-      <p><strong>Tables CSV</strong>: 15 tratamientos en 3 verticales — odontología general (5) · armonización facial (5) · implantología (5).</p>
-    </div>
-    <div class="card">
-      <h4>KB-Custom-Responses</h4>
-      <p><strong>FAQs manuales</strong>: precios fijos (consulta $40k + seña $20k), obras sociales, ubicación pública, cláusulas de prohibición.</p>
-    </div>
-  </div>
+    <!-- 07 · WORKFLOWS -->
+    <section id="workflows" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">07 · Workflows</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">8 Workflows con doble entrega</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Cada WF entregado en 2 formatos: <strong class="not-italic">instrucciones manuales UI</strong> + <strong class="not-italic">prompt corrido</strong> (150-400 palabras) para pegar en el AI Builder de GHL. Click en cada WF para expandir.</p>
 
-  <div class="callout">3 KBs / 7 max por bot · 3 KBs / 15 max por location. Margen amplio para crecer.</div>
-</section>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 01</span>
+            <h3 class="text-base font-semibold text-white">Lead nuevo entrante</h3>
+            <span class="pill pill-violet">Customer Replied</span>
+            <span class="pill pill-zinc">Carpeta · Bot</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Trigger: Customer Replied (WhatsApp) + filtro "vi tu publicidad" / "vengo por el anuncio". Si no es de campaña, NO activa el bot — va directo a Atena humana.</p>
+          <p class="text-xs text-violet-300/80 font-mono uppercase tracking-wider mb-2">Plantilla WhatsApp · bienvenida_lead_es</p>
+          <p class="text-xs text-white">Hola {{contact.first_name}}, gracias por escribir a Clínica GAM Odontología. Soy Atena. ¿Por qué tratamiento te estás contactando?</p>
+        </div>
+      </details>
 
-<!-- ==================== WORKFLOWS ==================== -->
-<section id="workflows">
-  <h2>Workflows · 8 con doble entrega</h2>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 02</span>
+            <h3 class="text-base font-semibold text-white">Handoff Agendar</h3>
+            <span class="pill pill-blue">Bot Trigger Workflow</span>
+            <span class="pill pill-zinc">Carpeta · Bot</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Sin trigger automático — lo dispara el bot. Update Opportunity → Handoff Atena · Add Tag handoff_agendar · Assign User Atena · Stop Bot · Internal Notification.</p>
+          <p class="text-xs text-violet-300/80 font-mono uppercase tracking-wider mb-2">Mini-prompt Bot Action</p>
+          <p class="text-xs text-white serif-italic">"Si el paciente intenta sacar turno, agendar, o ir presencialmente al consultorio."</p>
+        </div>
+      </details>
 
-  <table>
-    <thead><tr><th>#</th><th>Workflow</th><th>Trigger</th><th>Carpeta</th><th>Plantilla WhatsApp</th></tr></thead>
-    <tbody>
-      <tr><td>01</td><td>Lead nuevo entrante</td><td>Customer Replied + filtro campaña</td><td>Bot</td><td><code>bienvenida_lead_es</code></td></tr>
-      <tr><td>02</td><td>Handoff Agendar</td><td>Bot Trigger Workflow</td><td>Bot</td><td><code>confirmacion_handoff_es</code></td></tr>
-      <tr><td>03</td><td>Handoff Imagen</td><td>Bot Trigger Workflow</td><td>Bot</td><td><code>confirmacion_handoff_es</code></td></tr>
-      <tr><td>04</td><td>Handoff No Sé</td><td>Bot Trigger Workflow</td><td>Bot</td><td><code>confirmacion_handoff_es</code></td></tr>
-      <tr><td>05</td><td>Pedido Humano</td><td>Tag Added: <code>transferencia_a_humano</code></td><td>Bot</td><td><code>confirmacion_handoff_es</code></td></tr>
-      <tr><td>06</td><td>Follow-up 2h y 24h</td><td>Tag Added: <code>no_responde</code></td><td>Proceso comercial</td><td><code>follow_up_2h_es</code> · <code>follow_up_24h_es</code></td></tr>
-      <tr><td>07</td><td>Recordatorio turno</td><td>Pipeline Stage Changed: Turno confirmado</td><td>Proceso comercial</td><td><code>recordatorio_turno_24h_es</code> · <code>recordatorio_turno_2h_es</code></td></tr>
-      <tr><td>08</td><td>Confirmación seña</td><td>Pipeline Stage Changed: Seña enviada</td><td>Proceso comercial</td><td><code>confirmacion_sena_es</code></td></tr>
-    </tbody>
-  </table>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 03</span>
+            <h3 class="text-base font-semibold text-white">Handoff Imagen</h3>
+            <span class="pill pill-blue">Bot Trigger Workflow</span>
+            <span class="pill pill-zinc">Carpeta · Bot</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Cuando el paciente envía foto/video clínico. Update Contact Field handoff_motivo=imagen · Stop Bot · Notificación a Atena con preview de imagen.</p>
+          <p class="text-xs text-white serif-italic">"Cuando el paciente envíe foto, video, audio extenso o archivo. Aplica especialmente a fotos clínicas, radiografías, fotos de dolor."</p>
+        </div>
+      </details>
 
-  <div class="callout-good callout">✅ Cada WF tiene <strong>doble entrega</strong>: instrucciones manuales para UI + prompt corrido (150-400 palabras) para pegar en el AI Builder de GHL.</div>
-</section>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 04</span>
+            <h3 class="text-base font-semibold text-white">Handoff No Sé</h3>
+            <span class="pill pill-blue">Bot Trigger Workflow</span>
+            <span class="pill pill-zinc">Carpeta · Bot</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Cuando el bot no encuentra respuesta en la KB. Cada vez que dispara → indicador de gap en KB para cargar FAQ correspondiente post go-live.</p>
+        </div>
+      </details>
 
-<!-- ==================== WHATSAPP ==================== -->
-<section id="whatsapp">
-  <h2>WhatsApp API · Coexistence</h2>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 05</span>
+            <h3 class="text-base font-semibold text-white">Pedido Humano (tag-triggered)</h3>
+            <span class="pill pill-blue">Tag Added · transferencia_a_humano</span>
+            <span class="pill pill-zinc">Carpeta · Bot</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Disparado por Human Handover pre-built del bot (3 scenarios: Human Requested · Lack of Information · Failed to Resolve). Quirk: borrar y re-aplicar la tag para forzar disparo.</p>
+        </div>
+      </details>
 
-  <h3>7 Plantillas Meta (todas Utility · español)</h3>
-  <div class="grid grid-3">
-    <div class="card"><h4>bienvenida_lead_es</h4><p>Saludo inicial al entrar lead de campaña.</p></div>
-    <div class="card"><h4>confirmacion_handoff_es</h4><p>Mensaje al lead post-handoff a Atena.</p></div>
-    <div class="card"><h4>follow_up_2h_es</h4><p>Primer recordatorio si no responde.</p></div>
-    <div class="card"><h4>follow_up_24h_es</h4><p>Último intento de re-engagement.</p></div>
-    <div class="card"><h4>recordatorio_turno_24h_es</h4><p>Recordatorio 24h pre-cita.</p></div>
-    <div class="card"><h4>recordatorio_turno_2h_es</h4><p>Recordatorio 2h pre-cita.</p></div>
-    <div class="card"><h4>confirmacion_sena_es</h4><p>Confirmación tras pago de seña.</p></div>
-  </div>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 06</span>
+            <h3 class="text-base font-semibold text-white">Follow-up 2h y 24h</h3>
+            <span class="pill pill-amber">Tag Added · no_responde</span>
+            <span class="pill pill-zinc">Carpeta · Proceso comercial</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Secuencia automática de 2 mensajes para recuperar conversación. Plantillas <code class="font-mono text-violet-300 text-xs">follow_up_2h_es</code> y <code class="font-mono text-violet-300 text-xs">follow_up_24h_es</code> (ambas Utility).</p>
+          <p class="text-xs text-white serif-italic">"{{contact.first_name}}, ¿pudiste pensarlo? Quedo atenta para coordinar tu turno cuando puedas."</p>
+        </div>
+      </details>
 
-  <h3>Coexistence — Atena sigue usando su celular</h3>
-  <p>Atena conserva la app móvil de WhatsApp Business + el bot trabaja en paralelo en el CRM. Sync inicial 4-6h (App debe permanecer abierta).</p>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 07</span>
+            <h3 class="text-base font-semibold text-white">Recordatorio turno</h3>
+            <span class="pill pill-emerald">Pipeline Stage Changed</span>
+            <span class="pill pill-zinc">Carpeta · Proceso comercial</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Wait until 24h pre-cita → plantilla recordatorio_turno_24h_es. Wait until 2h pre-cita → plantilla recordatorio_turno_2h_es.</p>
+        </div>
+      </details>
 
-  <div class="callout-warn callout">⚠️ Pre-requisitos Meta: Display Name aprobado (24-48h) · App móvil v2.24.17+ · Página de Facebook vinculada · WABA configurada en LeadConnector.</div>
+      <details class="wf-card">
+        <summary>
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-violet-300/80">WF 08</span>
+            <h3 class="text-base font-semibold text-white">Confirmación seña</h3>
+            <span class="pill pill-emerald">Pipeline Stage Changed · Seña enviada</span>
+            <span class="pill pill-zinc">Carpeta · Proceso comercial</span>
+          </div>
+        </summary>
+        <div class="wf-body">
+          <p class="text-sm text-white mb-4">Cuando Atena mueve el lead a "Seña enviada" después de confirmar pago. Auto-envío de plantilla confirmacion_sena_es + notificación interna.</p>
+        </div>
+      </details>
+    </section>
 
-  <h3>Trust Tiering inicial</h3>
-  <p>Primeros 30 días: <strong>250 BIC/24h</strong>. Tras 30 días con plantillas alta calidad: auto-upgrade a 1,000.</p>
-</section>
+    <!-- 08 · WHATSAPP META -->
+    <section id="whatsapp" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">08 · WhatsApp Meta</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">7 plantillas Meta · todas Utility</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">WhatsApp API oficial con Coexistence — Atena sigue usando su celular en paralelo al CRM. Las 7 plantillas en categoría <strong class="not-italic">Utility</strong> (más barata · ~$0.025/msg en Argentina).</p>
 
-<!-- ==================== PRICING ==================== -->
-<section id="pricing">
-  <h2>Pricing al cliente</h2>
+      <div class="grid md:grid-cols-2 gap-3 mb-6">
+        <div class="template-card"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA</p><h3 class="text-sm font-semibold text-white mb-1">bienvenida_lead_es</h3><p class="text-[11px] text-white leading-relaxed">Saludo inicial al entrar lead de campaña Meta Ads. Usado en WF 01.</p></div>
+        <div class="template-card"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA</p><h3 class="text-sm font-semibold text-white mb-1">confirmacion_handoff_es</h3><p class="text-[11px] text-white leading-relaxed">Mensaje al lead post-handoff a Atena. Usado en WF 02-05.</p></div>
+        <div class="template-card"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA</p><h3 class="text-sm font-semibold text-white mb-1">follow_up_2h_es</h3><p class="text-[11px] text-white leading-relaxed">Primer recordatorio si no responde. Usado en WF 06.</p></div>
+        <div class="template-card"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA</p><h3 class="text-sm font-semibold text-white mb-1">follow_up_24h_es</h3><p class="text-[11px] text-white leading-relaxed">Último intento de re-engagement. Usado en WF 06.</p></div>
+        <div class="template-card"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA</p><h3 class="text-sm font-semibold text-white mb-1">recordatorio_turno_24h_es</h3><p class="text-[11px] text-white leading-relaxed">Recordatorio 24h pre-cita. Usado en WF 07.</p></div>
+        <div class="template-card"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA</p><h3 class="text-sm font-semibold text-white mb-1">recordatorio_turno_2h_es</h3><p class="text-[11px] text-white leading-relaxed">Recordatorio 2h pre-cita. Usado en WF 07.</p></div>
+        <div class="template-card md:col-span-2"><p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-1">PLANTILLA</p><h3 class="text-sm font-semibold text-white mb-1">confirmacion_sena_es</h3><p class="text-[11px] text-white leading-relaxed">Confirmación tras pago de seña. Usado en WF 08.</p></div>
+      </div>
 
-  <div class="pricing-box">
-    <div class="pricing-row"><span>GHL plan (a confirmar)</span><span>~$97 USD/mes</span></div>
-    <div class="pricing-row"><span>WhatsApp API base (reseller)</span><span>$20 USD/mes</span></div>
-    <div class="pricing-row"><span>Mensajes (~300/mes Utility, AR)</span><span>~$7.50 USD/mes</span></div>
-    <div class="pricing-row"><span>Total estimado</span><span>~$124.50 USD/mes</span></div>
-  </div>
+      <div class="rounded-2xl border border-amber-400/20 bg-amber-500/5 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-2">⚠️ Trust Tiering</p>
+        <p class="text-sm text-white">Primeros 30 días: <strong>250 BIC/24h</strong>. Tras 30 días con plantillas alta calidad: auto-upgrade a 1,000 BIC/24h. Si activan Click-to-WhatsApp Ads: 72h gratuitas post-click.</p>
+      </div>
+    </section>
 
-  <div class="callout">💡 Si activan <strong>Click-to-WhatsApp Ads</strong> en Meta Ads → 72h gratuitas post-click. Aprovechar para nurturing intensivo.</div>
-</section>
+    <!-- 09 · PRICING -->
+    <section id="pricing" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">09 · Pricing</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Costos al cliente</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Estimación mensual recurrente. Reseller pricing — incluye markup sobre costo base GHL/Meta.</p>
 
-<!-- ==================== RIESGOS ==================== -->
-<section id="riesgos">
-  <h2>Riesgos identificados + mitigaciones</h2>
+      <div class="rounded-3xl border border-violet-400/20 bg-violet-500/5 p-8">
+        <table class="step-table">
+          <tbody>
+            <tr><td>GHL plan (a confirmar)</td><td><span class="font-mono text-white">~$97 USD/mes</span></td></tr>
+            <tr><td>WhatsApp API base (reseller)</td><td><span class="font-mono text-white">$20 USD/mes</span></td></tr>
+            <tr><td>Mensajes (~300/mes Utility, AR)</td><td><span class="font-mono text-white">~$7.50 USD/mes</span></td></tr>
+            <tr><td><strong>Total estimado</strong></td><td><span class="font-mono text-emerald-300 font-semibold">~$124.50 USD/mes</span></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-  <table>
-    <thead><tr><th>Riesgo</th><th>Mitigación</th></tr></thead>
-    <tbody>
-      <tr><td><code>tipo_tratamiento</code> como TEXT libre</td><td>Mapeo via tags en WF de routing. Filtros de reporte por tags, no por CFs.</td></tr>
-      <tr><td>Bot cae a "No Sé" si KB vacía</td><td>Cargar las 3 KBs ANTES del go-live. Fase 6 obligatoria.</td></tr>
-      <tr><td>Colisión Stop Bot vs handoff "pedido humano"</td><td>Validar en testing. Trigger Workflow de handoff tiene prioridad si la condition se evalúa antes.</td></tr>
-      <tr><td>Coexistence sync 4-6h</td><td>Coordinar ventana de mantenimiento con Atena (no en horario pico).</td></tr>
-      <tr><td>Pacientes regulares vs nuevos</td><td>WF 01 filtra por frase de campaña. Si NO viene de campaña, el bot no se activa — va directo a Atena humana.</td></tr>
-      <tr><td>Trust Tiering 250 BIC/24h primeros 30 días</td><td>Distribuir volumen + plantillas Utility de alta calidad para upgrade automático.</td></tr>
-    </tbody>
-  </table>
-</section>
+      <div class="mt-6 rounded-2xl border border-emerald-400/20 bg-emerald-500/5 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-300/80 mb-2">💡 Optimización</p>
+        <p class="text-sm text-white">Si activan Click-to-WhatsApp Ads en Meta Ads → 72h gratuitas post-click. Aprovechar para nurturing intensivo en primeros 3 días. Ahorro estimado ~30% del costo por mensaje en periodo activo.</p>
+      </div>
+    </section>
 
-<!-- ==================== NEXT ==================== -->
-<section id="next">
-  <h2>Próximos pasos</h2>
+    <!-- 10 · RIESGOS -->
+    <section id="riesgos" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">10 · Riesgos</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Riesgos identificados + mitigaciones</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">6 riesgos clave del proyecto con mitigación documentada. Validar todos en Fase 8 (testing pre-launch).</p>
 
-  <ol>
-    <li><strong>Cliente (Stefi/Atena)</strong>: completar pendientes — alias bancario, horarios formales, listado completo de obras sociales, dirección privada.</li>
-    <li><strong>Implementador (Andrés)</strong>: <code>/preflight-ghl</code> + cargar todo en GHL siguiendo <code>CHECKLIST-IMPLEMENTACION.md</code>.</li>
-    <li><strong>Meta</strong>: enviar las 7 plantillas para aprobación (24-48h cada una).</li>
-    <li><strong>Coexistence</strong>: coordinar sync 4-6h con Atena.</li>
-    <li><strong>Testing pre-launch</strong>: smoke tests + <code>/TEST-BOT-GHL</code> + 5 conversaciones de prueba.</li>
-    <li><strong>Go-live</strong>: bot status Auto Pilot · plan de respuesta primeras 24h.</li>
-    <li><strong>Post-launch</strong>: revisión semanal primeras 4 semanas · ajustar KB según Thumbs Down · versionar prompt a v1 post 50 conversaciones reales.</li>
-  </ol>
+      <div class="diagram-card">
+        <table class="step-table">
+          <thead><tr><th>Riesgo</th><th>Mitigación</th></tr></thead>
+          <tbody>
+            <tr><td><strong>tipo_tratamiento como TEXT libre</strong></td><td>Mapeo via tags en WF de routing. Filtros de reporte por tags, no por CFs.</td></tr>
+            <tr><td><strong>Bot cae a "No Sé" si KB vacía</strong></td><td>Cargar las 3 KBs ANTES del go-live. Fase 6 obligatoria.</td></tr>
+            <tr><td><strong>Colisión Stop Bot vs handoff "pedido humano"</strong></td><td>Validar en testing. Trigger Workflow tiene prioridad si la condition se evalúa antes.</td></tr>
+            <tr><td><strong>Coexistence sync 4-6h</strong></td><td>Coordinar ventana con Atena (no en horario pico). App debe quedar abierta.</td></tr>
+            <tr><td><strong>Pacientes regulares vs nuevos</strong></td><td>WF 01 filtra por frase de campaña. Si NO viene de campaña, va directo a Atena humana.</td></tr>
+            <tr><td><strong>Trust Tiering 250 BIC/24h primeros 30 días</strong></td><td>Distribuir volumen + plantillas Utility de alta calidad para upgrade automático.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-  <div class="callout-good callout">📦 Sistema completo en <code>SETUP proceso comercial/</code> — 24 archivos listos para cargar. Plan paso a paso en <code>CHECKLIST-IMPLEMENTACION.md</code>.</div>
-</section>
+    <!-- 11 · NEXT -->
+    <section id="next" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">11 · Próximos pasos</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">7 acciones para go-live</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">Sistema completo en SETUP/ — 24 archivos listos. Plan paso a paso en CHECKLIST-IMPLEMENTACION.md.</p>
 
-<footer>
-  <p>Plan generado el 2026-05-09 · Implementación: <strong>Andrés Linares</strong> (Inflect / AL Consulting) · Cliente: <strong>Clínica GAM Odontología</strong> (Stefi · Atena)</p>
-</footer>
+      <div class="space-y-3">
+        <div class="kb-card"><div class="flex items-start gap-4"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">01</span><div><h3 class="text-base font-semibold text-white mb-1">Cliente · completar pendientes</h3><p class="text-sm text-white">Stefi/Atena pasan: alias bancario, horarios formales, listado completo de obras sociales, dirección privada, correo de salida.</p></div></div></div>
+        <div class="kb-card"><div class="flex items-start gap-4"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">02</span><div><h3 class="text-base font-semibold text-white mb-1">Andrés · /preflight-ghl OK</h3><p class="text-sm text-white">Ejecutar preflight con PIT + Location ID configurados.</p></div></div></div>
+        <div class="kb-card"><div class="flex items-start gap-4"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">03</span><div><h3 class="text-base font-semibold text-white mb-1">Cargar todo en GHL</h3><p class="text-sm text-white">Seguir <code class="font-mono text-violet-300 text-xs">CHECKLIST-IMPLEMENTACION.md</code> — pipeline → custom values → CFs → workflows → bot → KBs → plantillas Meta.</p></div></div></div>
+        <div class="kb-card"><div class="flex items-start gap-4"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">04</span><div><h3 class="text-base font-semibold text-white mb-1">Meta · aprobación de plantillas</h3><p class="text-sm text-white">Submit las 7 plantillas — 24-48h de aprobación cada una. En paralelo continuar con otros pasos.</p></div></div></div>
+        <div class="kb-card"><div class="flex items-start gap-4"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">05</span><div><h3 class="text-base font-semibold text-white mb-1">Coexistence sync</h3><p class="text-sm text-white">Coordinar ventana 4-6h con Atena. Su app móvil debe quedar abierta durante el sync.</p></div></div></div>
+        <div class="kb-card"><div class="flex items-start gap-4"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">06</span><div><h3 class="text-base font-semibold text-white mb-1">Testing pre-launch</h3><p class="text-sm text-white">Smoke tests + <code class="font-mono text-violet-300 text-xs">/TEST-BOT-GHL</code> + 5 conversaciones reales con Atena supervisando.</p></div></div></div>
+        <div class="kb-card"><div class="flex items-start gap-4"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mt-1">07</span><div><h3 class="text-base font-semibold text-white mb-1">Go-live + monitoring</h3><p class="text-sm text-white">Bot status Auto Pilot · plan de respuesta primeras 24h · revisión semanal primeras 4 semanas · versionar prompt a v1 post 50 conversaciones reales.</p></div></div></div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="pt-12 mt-16 border-t border-white/[0.06]">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white mb-1">Plan v3.0</p>
+          <p class="text-sm text-white">Generado 2026-05-09 · Andrés Linares</p>
+          <p class="text-xs text-white">Inflect / AL Consulting · Cliente: Clínica GAM Odontología</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="BLUEPRINT-BOT.html" class="pill pill-violet hover:opacity-100 opacity-80">↗ Blueprint Bot v0</a>
+          <a href="KICKOFF-VISUAL.html" class="pill pill-blue hover:opacity-100 opacity-80">↗ Kickoff Visual R1</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
 
 </div>
 
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'dark',
-    themeVariables: {
-      darkMode: true,
-      background: '#1e293b',
-      primaryColor: '#7c3aed',
-      primaryTextColor: '#fff',
-      primaryBorderColor: '#a78bfa',
-      lineColor: '#94a3b8',
-      secondaryColor: '#3b82f6',
-      tertiaryColor: '#16a34a'
-    },
-    flowchart: { curve: 'basis', padding: 16 }
-  });
-
-  function copy(btn) {
-    const text = btn.parentElement.querySelector('code').innerText;
+  function copyBlock(btn) {
+    const block = btn.parentElement.querySelector('.prompt-block');
+    const text = block.innerText;
     navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = '✓ Copiado';
       btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 1500);
+      btn.querySelector('.copy-text').textContent = 'Copiado';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.querySelector('.copy-text').textContent = 'Copiar';
+      }, 1500);
     });
   }
 </script>

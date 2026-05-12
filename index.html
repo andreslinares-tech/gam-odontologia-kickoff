@@ -2005,6 +2005,103 @@ NO transferir si:
         </div>
       </div>
 
+      <!-- DETALLE · plantillas con cuerpo listo (doble bloque canónico) -->
+      <div class="mt-10 mb-8">
+        <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-white mb-2">DETALLE · plantillas con cuerpo listo</p>
+        <h3 class="text-xl font-semibold text-white mb-3">Templates listos · doble bloque Meta + GHL</h3>
+        <p class="text-[13px] text-white serif-italic mb-6 max-w-2xl">Formato canónico — primero se carga en Meta Business Manager (aprobación 1–15min), después se mapea en la action del workflow. Patrón validado contra <code>EXPERTO COMERCIAL + BOT / curso-andres / 08-mensajes-sms-vs-whatsapp-api.md</code>.</p>
+
+        <!-- Prerrequisito Custom Values -->
+        <div class="mb-6 rounded-xl border border-cyan-400/20 bg-cyan-500/5 p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan-300/80 mb-2">⚙️ Prerrequisito · 2 Custom Values en GHL</p>
+          <p class="text-[12px] text-white mb-3">Ambas plantillas usan custom values que hay que crear primero en <strong>Settings → Custom Values</strong>:</p>
+          <table class="step-table">
+            <tbody>
+              <tr><td>Bot Nombre</td><td><code>bot_nombre</code> = <span class="font-mono text-cyan-200">Athena</span></td></tr>
+              <tr><td>Clínica Nombre</td><td><code>clinica_nombre</code> = <span class="font-mono text-cyan-200">GAM Odontología</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Template 1: bienvenida_lead_nuevo -->
+        <details class="wf-card mb-3" open>
+          <summary>
+            <div class="flex items-center gap-3 flex-wrap">
+              <span class="font-mono text-[11px] text-amber-300/80">PLANTILLA · WF1</span>
+              <h4 class="text-lg font-semibold text-white">bienvenida_lead_nuevo</h4>
+              <span class="pill pill-amber">Marketing · es_AR</span>
+              <span class="pill pill-zinc">2 vars</span>
+            </div>
+          </summary>
+          <div class="wf-body">
+            <p class="serif-italic text-white mb-5">Saludo inicial al lead nuevo que entra por WhatsApp (campaña Meta Ads). Dispara dentro del WF1 después del filtro de <code>first_name vacío</code>.</p>
+
+            <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-white mb-2">A · Plantilla Meta · Settings → WhatsApp → Plantillas</p>
+            <pre class="prompt-block amber">Nombre: bienvenida_lead_nuevo
+Categoría: Marketing
+Idioma: Spanish (es_AR; fallback es)
+Encabezado: (vacío)
+Cuerpo:
+  Hola! Soy {{1}} de {{2}}.
+
+  Vi que escribiste para sacar info. Contame qué tratamiento te llama la atención así te oriento mejor:
+
+  – Odontología general
+  – Armonización facial
+  – Implantología 24h
+
+  Cuál de los tres?
+
+Variables:
+  {{1}} = custom_values.bot_nombre        (valor: Athena)
+  {{2}} = custom_values.clinica_nombre    (valor: GAM Odontología)</pre>
+
+            <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-white mt-5 mb-2">B · Workflow action · WF1 · Lead nuevo entrante</p>
+            <pre class="prompt-block">Action: Send WhatsApp
+  Template: bienvenida_lead_nuevo
+  Variables:
+    {{1}} ← {{custom_values.bot_nombre}}
+    {{2}} ← {{custom_values.clinica_nombre}}</pre>
+          </div>
+        </details>
+
+        <!-- Template 2: seguimiento_lead_no_responde -->
+        <details class="wf-card mb-3" open>
+          <summary>
+            <div class="flex items-center gap-3 flex-wrap">
+              <span class="font-mono text-[11px] text-amber-300/80">PLANTILLA · WF "LEAD NO RESPONDE"</span>
+              <h4 class="text-lg font-semibold text-white">seguimiento_lead_no_responde</h4>
+              <span class="pill pill-amber">Marketing · es_AR</span>
+              <span class="pill pill-zinc">2 vars</span>
+            </div>
+          </summary>
+          <div class="wf-body">
+            <p class="serif-italic text-white mb-5">Re-engagement cuando el lead no respondió la bienvenida. La misma plantilla se usa en los delays de 2h y 24h dentro del WF <code>2- LEAD NO RESPONDE</code>.</p>
+
+            <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-white mb-2">A · Plantilla Meta · Settings → WhatsApp → Plantillas</p>
+            <pre class="prompt-block amber">Nombre: seguimiento_lead_no_responde
+Categoría: Marketing
+Idioma: Spanish (es_AR; fallback es)
+Encabezado: (vacío)
+Cuerpo:
+  Hola! Soy {{1}} de {{2}}.
+
+  Te escribí hace un rato y no llegué a hablar con vos. Si tenés alguna duda o querés sacar turno, contame y avanzamos 🙌
+
+Variables:
+  {{1}} = custom_values.bot_nombre        (valor: Athena)
+  {{2}} = custom_values.clinica_nombre    (valor: GAM Odontología)</pre>
+
+            <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-white mt-5 mb-2">B · Workflow action · WF "2- LEAD NO RESPONDE"</p>
+            <pre class="prompt-block">Action: Send WhatsApp
+  Template: seguimiento_lead_no_responde
+  Variables:
+    {{1}} ← {{custom_values.bot_nombre}}
+    {{2}} ← {{custom_values.clinica_nombre}}</pre>
+          </div>
+        </details>
+      </div>
+
       <div class="rounded-2xl border border-amber-400/20 bg-amber-500/5 p-5">
         <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/80 mb-2">⚠️ Trust Tiering</p>
         <p class="text-sm text-white">Primeros 30 días: <strong>250 BIC/24h</strong>. Tras 30 días con plantillas alta calidad: auto-upgrade a 1,000 BIC/24h. Si activan Click-to-WhatsApp Ads: 72h gratuitas post-click.</p>

@@ -221,6 +221,65 @@
       details.wf-card[open] > summary::after, details.wf-card > summary::after { display: none; }
       .pill { border: 1px solid #888; color: #333; background: #f5f5f5; }
     }
+
+    /* === SECCIÓN 11 · CASOS DE PRUEBA (pattern de Propiedades Ecuador adaptado) === */
+    .case-card { background: rgba(9,9,11,0.5); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 28px; transition: border-color 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+    .case-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; transition: width 0.25s ease; }
+    .case-card[data-priority="critical"]::before { background: #F87171; }
+    .case-card[data-priority="important"]::before { background: #FBBF24; }
+    .case-card[data-priority="nice"]::before { background: #4ADE80; }
+    .case-card[data-status="passed"] { border-color: rgba(74,222,128,0.3); }
+    .case-card[data-status="passed"]::before { background: #4ADE80 !important; width: 6px; }
+    .case-card[data-status="failed"] { border-color: rgba(248,113,113,0.3); }
+    .case-card[data-status="failed"]::before { background: #F87171 !important; width: 6px; }
+    .case-card[data-hidden="true"] { display: none; }
+
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; }
+    .badge-critical { background: rgba(248,113,113,0.15); color: #FCA5A5; border: 1px solid rgba(248,113,113,0.3); }
+    .badge-important { background: rgba(251,191,36,0.15); color: #FDE68A; border: 1px solid rgba(251,191,36,0.35); }
+    .badge-nice { background: rgba(74,222,128,0.15); color: #86EFAC; border: 1px solid rgba(74,222,128,0.3); }
+    .badge-rule { background: rgba(244,63,94,0.18); color: #FCA5A5; border: 1px solid rgba(244,63,94,0.4); }
+
+    .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-family: 'Geist Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .status-pending { background: rgba(113,113,122,0.2); color: #A1A1AA; }
+    .status-passed { background: rgba(74,222,128,0.18); color: #86EFAC; }
+    .status-failed { background: rgba(248,113,113,0.18); color: #FCA5A5; }
+
+    .turn-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+    .turn-table th { text-align: left; padding: 10px 14px; font-family: 'Geist Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: #71717A; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 500; }
+    .turn-table td { padding: 12px 14px; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .turn-table .turn-num { font-family: 'Geist Mono', monospace; font-size: 11px; color: #71717A; width: 36px; }
+    .turn-table .actor-bot { color: #C4B5FD; font-weight: 500; font-size: 12px; }
+    .turn-table .actor-system { color: #94A3B8; font-style: italic; font-size: 12px; }
+    .turn-table .actor-lead { color: #FDE68A; font-weight: 500; font-size: 12px; }
+    .turn-table .msg-system { color: #71717A; font-style: italic; font-size: 12px; }
+    .turn-table .msg-bot { color: #E4E4E7; }
+    .turn-table .msg-lead { color: #FAFAFA; }
+
+    .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 8px; transition: background 0.15s; cursor: pointer; }
+    .check-item:hover { background: rgba(255,255,255,0.02); }
+    .check-item input[type="checkbox"] { appearance: none; width: 18px; height: 18px; border: 1.5px solid rgba(255,255,255,0.2); border-radius: 5px; flex-shrink: 0; margin-top: 2px; cursor: pointer; transition: all 0.15s; position: relative; background: rgba(0,0,0,0.2); }
+    .check-item input[type="checkbox"]:checked { background: #4ADE80; border-color: #4ADE80; }
+    .check-item input[type="checkbox"]:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #052E16; font-size: 12px; font-weight: 700; }
+    .check-item input[type="checkbox"]:checked + .check-label { color: #71717A; text-decoration: line-through; text-decoration-color: rgba(74,222,128,0.5); }
+    .check-label { color: #D4D4D8; font-size: 13px; line-height: 1.55; transition: color 0.15s; }
+
+    .case-actions { display: flex; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); flex-wrap: wrap; }
+    .btn { font-family: 'Geist', sans-serif; font-size: 12px; padding: 8px 14px; border-radius: 8px; border: 1px solid; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+    .btn-pass { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.3); color: #86EFAC; }
+    .btn-pass:hover { background: rgba(74,222,128,0.2); border-color: rgba(74,222,128,0.5); }
+    .btn-fail { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.3); color: #FCA5A5; }
+    .btn-fail:hover { background: rgba(248,113,113,0.2); border-color: rgba(248,113,113,0.5); }
+    .btn-reset { background: transparent; border-color: rgba(255,255,255,0.1); color: #A1A1AA; }
+    .btn-reset:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.2); color: #E4E4E7; }
+    .btn-primary { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.4); color: #C4B5FD; }
+    .btn-primary:hover { background: rgba(139,92,246,0.25); border-color: rgba(139,92,246,0.6); }
+
+    .filter-pill { padding: 6px 14px; border-radius: 999px; font-family: 'Geist Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; background: rgba(255,255,255,0.04); color: #A1A1AA; }
+    .filter-pill:hover { background: rgba(255,255,255,0.08); color: #E4E4E7; }
+    .filter-pill.active { background: rgba(139,92,246,0.18); border-color: rgba(139,92,246,0.4); color: #C4B5FD; }
+    .progress-ring { transform: rotate(-90deg); }
+    .progress-ring circle { transition: stroke-dashoffset 0.3s ease; }
   </style>
 </head>
 <body class="bg-[#26262a] text-white antialiased grain min-h-screen relative">
@@ -255,6 +314,7 @@
       <a href="#roadmap" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">08 · Roadmap · 10 fases</a>
       <a href="#riesgos" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">09 · Riesgos</a>
       <a href="#next" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">10 · Próximos pasos</a>
+      <a href="#tests" class="toc-link block py-2 px-3 text-sm text-white border-l border-transparent">11 · Casos de prueba</a>
     </nav>
 
     <div class="mt-10 pt-6 border-t border-white/[0.06]">
@@ -2337,9 +2397,626 @@ Variables:
       </div>
     </section>
 
+    <!-- ============================================================ -->
+    <!-- 11 · CASOS DE PRUEBA · Test plan interactivo bot Athena       -->
+    <!-- ============================================================ -->
+    <section id="tests" class="mb-24 scroll-mt-12">
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-white mb-3">11 · Casos de prueba</p>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Test plan · Bot Athena</h2>
+      <p class="serif-italic text-white mb-8 max-w-3xl">21 casos para validar Athena antes de go-live. Checkboxes y pasa/falla persisten en <code>localStorage</code> del navegador — podés cerrar el browser y volver al día siguiente sin perder progreso. Patrón replicable adaptado de <code>propiedades-ecuador/CASOS-PRUEBA-BOTS.html</code>.</p>
+
+      <!-- Progress + Filters -->
+      <div class="rounded-3xl border border-white/[0.06] bg-zinc-950/40 p-6 mb-10">
+        <div class="flex items-center justify-between gap-6 flex-wrap mb-6">
+          <div class="flex items-center gap-4">
+            <svg width="50" height="50" class="progress-ring">
+              <circle cx="25" cy="25" r="20" stroke="rgba(255,255,255,0.08)" stroke-width="3" fill="none"/>
+              <circle id="progressCircle" cx="25" cy="25" r="20" stroke="#8B5CF6" stroke-width="3" fill="none" stroke-dasharray="125.66" stroke-dashoffset="125.66" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-white">Progreso</p>
+              <p class="text-2xl font-semibold text-white"><span id="progressNum">0/21</span></p>
+            </div>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="resetAllTests()" class="btn btn-reset">Reset todo</button>
+            <button onclick="exportTestResults()" class="btn btn-primary">⤓ Export JSON</button>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="filterTests('all')" class="filter-pill active" data-filter="all">Todos · 21</button>
+          <button onclick="filterTests('pending')" class="filter-pill" data-filter="pending">Pendientes</button>
+          <button onclick="filterTests('passed')" class="filter-pill" data-filter="passed">Pasados</button>
+          <button onclick="filterTests('failed')" class="filter-pill" data-filter="failed">Fallidos</button>
+          <span class="text-white/30 mx-2">·</span>
+          <button onclick="filterTests('critical')" class="filter-pill" data-filter="critical">🔴 Críticos · 12</button>
+          <button onclick="filterTests('important')" class="filter-pill" data-filter="important">🟡 Importantes · 5</button>
+          <button onclick="filterTests('nice')" class="filter-pill" data-filter="nice">🟢 Nice-to-have · 4</button>
+        </div>
+      </div>
+
+      <!-- 🔴 CRÍTICOS -->
+      <h3 class="text-xl font-semibold text-white mb-5 mt-12">🔴 Críticos · must pass antes de go-live</h3>
+
+      <!-- Caso 1 -->
+      <article id="caso-1" class="case-card mb-5" data-case="1" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 01</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-1">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Saludo + identificación de tratamiento (happy path)</h4>
+            <p class="text-sm text-white mt-2">Lead nuevo entra por WhatsApp y el bot dispara la bienvenida con las 3 opciones.</p>
+          </div>
+        </div>
+        <div class="mb-5">
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📜 Turn-by-turn</p>
+          <div class="rounded-lg overflow-hidden border border-white/5">
+            <table class="turn-table">
+              <thead><tr><th>#</th><th>Quién</th><th>Mensaje</th></tr></thead>
+              <tbody>
+                <tr><td class="turn-num">1</td><td><span class="actor-lead">Lead</span></td><td class="msg-lead">Hola, info</td></tr>
+                <tr><td class="turn-num">2</td><td><span class="actor-system">WF1</span></td><td class="msg-system">(filtra first_name vacío → envía template bienvenida_lead_nuevo → activa bot)</td></tr>
+                <tr><td class="turn-num">3</td><td><span class="actor-bot">Athena</span></td><td class="msg-bot">Hola! Soy Athena de GAM Odontología. Vi que escribiste para sacar info. Contame qué tratamiento te llama la atención... – Odontología general – Armonización facial – Implantología 24h. Cuál de los tres?</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c1-1"><span class="check-label">Llegó el template <code>bienvenida_lead_nuevo</code> con texto correcto (Athena + GAM Odontología)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c1-2"><span class="check-label">Contacto entró a etapa <code>🔴 Lead nuevo</code> del pipeline</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c1-3"><span class="check-label">Bot Athena queda en status <code>Active</code> (visible en el panel de Conversation AI)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c1-4"><span class="check-label">Bot NO escribió "¿..." ni "¡..." (solo signos de cierre)</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('1','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('1','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('1','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 2 -->
+      <article id="caso-2" class="case-card mb-5" data-case="2" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 02</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-2">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Captura tipo_tratamiento · 3 verticales</h4>
+            <p class="text-sm text-white mt-2">Bot identifica la vertical (general / armonización / implantología) y la guarda como string consistente en el CF.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist · 3 sub-tests (mandá 3 leads distintos)</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c2-1"><span class="check-label">Lead dice <strong>"implantología 24h"</strong> → CF <code>tipo_tratamiento</code> = "implantología" (string consistente, no "implantes" ni "rehab")</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c2-2"><span class="check-label">Lead dice <strong>"quiero limpieza"</strong> → CF <code>tipo_tratamiento</code> = "odontología general"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c2-3"><span class="check-label">Lead dice <strong>"carillas"</strong> → CF <code>tipo_tratamiento</code> = "armonización facial"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c2-4"><span class="check-label">CF <code>motivo_consulta</code> también se llenó con frase corta del lead</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('2','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('2','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('2','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 3 -->
+      <article id="caso-3" class="case-card mb-5" data-case="3" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 03</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-3">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Handoff Agendar</h4>
+            <p class="text-sm text-white mt-2">Lead manifiesta intención de turno → bot transfiere a Atena humana.</p>
+          </div>
+        </div>
+        <div class="mb-5">
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📜 Turn-by-turn</p>
+          <div class="rounded-lg overflow-hidden border border-white/5">
+            <table class="turn-table">
+              <tbody>
+                <tr><td class="turn-num">N</td><td><span class="actor-lead">Lead</span></td><td class="msg-lead">Quiero sacar turno · Cuándo puedo ir · Agendame</td></tr>
+                <tr><td class="turn-num">N+1</td><td><span class="actor-bot">Athena</span></td><td class="msg-bot">Buenísimo, te paso con Atena para coordinar la fecha. En un ratito te escribe.</td></tr>
+                <tr><td class="turn-num">N+2</td><td><span class="actor-system">WF</span></td><td class="msg-system"><code>1- LEAD QUIERE AGENDAR</code> dispara → bot Inactive · tag <code>agendar</code> · notif Atena</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c3-1"><span class="check-label">CF <code>handoff_motivo</code> = "agendar"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c3-2"><span class="check-label">Tag <code>agendar</code> aplicado al contacto</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c3-3"><span class="check-label">Bot Athena pasó a <code>Inactive</code></span></label>
+            <label class="check-item"><input type="checkbox" data-key="c3-4"><span class="check-label">Atena recibió notificación (in-app, email o lo que esté configurado)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c3-5"><span class="check-label">Contacto se movió a etapa <code>🔵 Lead levanta la mano</code></span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('3','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('3','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('3','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 4 -->
+      <article id="caso-4" class="case-card mb-5" data-case="4" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 04</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="badge badge-rule">⚠️ Regla dura</span>
+              <span class="status-pill status-pending" id="status-4">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Handoff Imagen · NO interpretar fotos</h4>
+            <p class="text-sm text-white mt-2">Lead manda foto/radiografía. El bot NO debe interpretarla bajo ningún concepto.</p>
+          </div>
+        </div>
+        <div class="mb-5">
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📜 Turn-by-turn</p>
+          <div class="rounded-lg overflow-hidden border border-white/5">
+            <table class="turn-table">
+              <tbody>
+                <tr><td class="turn-num">N</td><td><span class="actor-lead">Lead</span></td><td class="msg-lead">📷 (manda foto de muela o radiografía)</td></tr>
+                <tr><td class="turn-num">N+1</td><td><span class="actor-bot">Athena</span></td><td class="msg-bot">Recibí tu foto, Atena la revisa enseguida y te responde.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c4-1"><span class="check-label">Bot NO dijo "veo que tu radiografía muestra..." ni nada que sugiera interpretar clínicamente</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c4-2"><span class="check-label">CF <code>handoff_motivo</code> = "imagen"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c4-3"><span class="check-label">Tag <code>envio-imagen</code> aplicado</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c4-4"><span class="check-label">Bot Athena pasó a <code>Inactive</code></span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('4','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('4','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('4','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 5 -->
+      <article id="caso-5" class="case-card mb-5" data-case="5" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 05</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-5">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Handoff No Sé · KB miss</h4>
+            <p class="text-sm text-white mt-2">Lead pregunta algo que el bot no tiene en KB → reconoce miss + handoff.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c5-1"><span class="check-label">Mandé pregunta fuera de KB (ej. <em>"Trabajan con OSDE?"</em>) y bot NO inventó respuesta</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c5-2"><span class="check-label">Bot dijo algo tipo <em>"Dejame chequear con el equipo y te confirmo enseguida"</em></span></label>
+            <label class="check-item"><input type="checkbox" data-key="c5-3"><span class="check-label">CF <code>handoff_motivo</code> = "no_se"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c5-4"><span class="check-label">Atena recibió la pregunta del lead para responder</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('5','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('5','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('5','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 6 -->
+      <article id="caso-6" class="case-card mb-5" data-case="6" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 06</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-6">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Handoff Pedido Humano · prioridad máxima</h4>
+            <p class="text-sm text-white mt-2">Lead pide explícitamente hablar con persona → handoff inmediato sin pasos previos.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c6-1"><span class="check-label">Mandé <em>"pasame con una persona"</em> / <em>"quiero hablar con humano"</em> / <em>"no me sirve el chat"</em> → handoff inmediato</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c6-2"><span class="check-label">Bot respondió con tono empático, sin insistir en seguir él</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c6-3"><span class="check-label">CF <code>handoff_motivo</code> = "pedido_humano"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c6-4"><span class="check-label">Tag <code>transferencia a humano</code> aplicado · Atena notificada con prioridad</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('6','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('6','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('6','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 7 -->
+      <article id="caso-7" class="case-card mb-5" data-case="7" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 07</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="badge badge-rule">⚠️ Regla dura</span>
+              <span class="status-pill status-pending" id="status-7">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">NO revelar ser IA</h4>
+            <p class="text-sm text-white mt-2">Si el lead pregunta si es bot/IA, responde evasivo sin confirmar ni negar categóricamente.</p>
+          </div>
+        </div>
+        <div class="mb-5">
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📜 Turn-by-turn</p>
+          <div class="rounded-lg overflow-hidden border border-white/5">
+            <table class="turn-table">
+              <tbody>
+                <tr><td class="turn-num">N</td><td><span class="actor-lead">Lead</span></td><td class="msg-lead">Sos bot? · Sos IA? · Estoy hablando con una máquina?</td></tr>
+                <tr><td class="turn-num">N+1</td><td><span class="actor-bot">Athena</span></td><td class="msg-bot">Soy Athena, te estoy atendiendo del WhatsApp de la clínica. En qué te ayudo?</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist · probá las 3 variantes</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c7-1"><span class="check-label">NO dijo "Sí, soy un asistente IA"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c7-2"><span class="check-label">NO dijo "Sí soy un bot"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c7-3"><span class="check-label">NO usó frases tipo "como inteligencia artificial...", "como modelo de lenguaje..."</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c7-4"><span class="check-label">Mantuvo persona "Athena" + reorientó la conversación</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('7','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('7','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('7','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 8 -->
+      <article id="caso-8" class="case-card mb-5" data-case="8" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 08</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="badge badge-rule">⚠️ Regla dura</span>
+              <span class="status-pill status-pending" id="status-8">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">NO dar presupuesto de tratamiento específico</h4>
+            <p class="text-sm text-white mt-2">Bot solo puede mencionar $40k consulta y $20k seña. Para todo lo demás: deriva a evaluación con tomografía.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c8-1"><span class="check-label">Pregunté <em>"cuánto cuesta una corona?"</em> → bot esquivó con "para presupuesto exacto necesitamos evaluarte con tomografía"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c8-2"><span class="check-label">Pregunté <em>"precio de un implante?"</em> → mismo comportamiento</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c8-3"><span class="check-label">Pregunté <em>"cuánto sale armonización?"</em> → mismo comportamiento</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c8-4"><span class="check-label">NO dio ningún número de tratamiento específico (solo $40k consulta + $20k seña son OK)</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('8','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('8','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('8','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 9 -->
+      <article id="caso-9" class="case-card mb-5" data-case="9" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 09</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="badge badge-rule">⚠️ Regla dura</span>
+              <span class="status-pill status-pending" id="status-9">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">NO dar dirección exacta</h4>
+            <p class="text-sm text-white mt-2">Solo "Neuquén, planta alta". La dirección exacta se entrega cuando confirma turno con Atena.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c9-1"><span class="check-label">Pregunté <em>"cuál es la dirección?"</em> / <em>"dónde están exactamente?"</em> / <em>"en qué calle?"</em></span></label>
+            <label class="check-item"><input type="checkbox" data-key="c9-2"><span class="check-label">Bot respondió <em>"Estamos en Neuquén, planta alta. Cuando coordines turno te paso la dirección exacta"</em> o similar</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c9-3"><span class="check-label">NO dio calle ni número específico</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c9-4"><span class="check-label">⚠️ Importante: chequear que el bot NO lea la address placeholder de GHL (<em>"1209 Mountain Rd, Albuquerque NM"</em>) — esto es un default que hay que cambiar en Settings → Business Profile</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('9','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('9','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('9','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 10 -->
+      <article id="caso-10" class="case-card mb-5" data-case="10" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 10</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-10">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Stop Bot · despedida natural (60min)</h4>
+            <p class="text-sm text-white mt-2">Lead se despide naturalmente. Bot responde corto y se apaga 60min.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c10-1"><span class="check-label">Mandé <em>"gracias, después te aviso"</em> / <em>"chau"</em> / <em>"listo gracias"</em> → bot respondió "Dale, quedo atenta" (o similar breve)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c10-2"><span class="check-label">Bot Athena pasó a <code>Inactive</code></span></label>
+            <label class="check-item"><input type="checkbox" data-key="c10-3"><span class="check-label">Esperé &lt;60min y escribí de nuevo → bot NO respondió (sigue en cooldown)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c10-4"><span class="check-label">Esperé &gt;60min y escribí → bot reactivó y respondió</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('10','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('10','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('10','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 11 -->
+      <article id="caso-11" class="case-card mb-5" data-case="11" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 11</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-11">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Stop Bot · desinterés (24h)</h4>
+            <p class="text-sm text-white mt-2">Lead expresa desinterés. Bot cierra elegante y se apaga 24h.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c11-1"><span class="check-label">Mandé <em>"no me interesa"</em> / <em>"ya no quiero"</em> / <em>"era solo curiosidad"</em></span></label>
+            <label class="check-item"><input type="checkbox" data-key="c11-2"><span class="check-label">Bot respondió <em>"Listo, ningún problema. Cualquier duda, acá estoy"</em> o similar</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c11-3"><span class="check-label">Bot Athena pasó a <code>Inactive</code> por 24h</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('11','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('11','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('11','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 12 -->
+      <article id="caso-12" class="case-card mb-5" data-case="12" data-priority="critical">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 12</span>
+              <span class="badge badge-critical">🔴 Crítico</span>
+              <span class="status-pill status-pending" id="status-12">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Lead no responde · WF dispara seguimiento</h4>
+            <p class="text-sm text-white mt-2">Lead no responde la bienvenida → WF "2- LEAD NO RESPONDE" envía template a 2h y 24h.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c12-1"><span class="check-label">Mandé primer mensaje y NO respondí la bienvenida</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c12-2"><span class="check-label">A las 2h llegó el template <code>seguimiento_lead_no_responde</code></span></label>
+            <label class="check-item"><input type="checkbox" data-key="c12-3"><span class="check-label">A las 24h llegó el segundo seguimiento (si está configurado así)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c12-4"><span class="check-label">Tag <code>no-responde</code> aplicado · WF <code>2- LEAD NO RESPONDE</code> ejecutó correcto</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('12','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('12','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('12','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- 🟡 IMPORTANTES -->
+      <h3 class="text-xl font-semibold text-white mb-5 mt-12">🟡 Importantes · validar pre-launch + monitoring activo</h3>
+
+      <!-- Caso 13 -->
+      <article id="caso-13" class="case-card mb-5" data-case="13" data-priority="important">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 13</span>
+              <span class="badge badge-important">🟡 Importante</span>
+              <span class="status-pill status-pending" id="status-13">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Filtro Meta Ads vs paciente regular</h4>
+            <p class="text-sm text-white mt-2">WF1 filtra por <code>first_name vacío</code>: pacientes existentes deben ir directo a Atena humana sin activar el bot.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c13-1"><span class="check-label">Caso A: contacto nuevo (first_name vacío) → bot Activa</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c13-2"><span class="check-label">Caso B: contacto existente (first_name lleno) → bot NO Activa, mensaje queda para Atena</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('13','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('13','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('13','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 14 -->
+      <article id="caso-14" class="case-card mb-5" data-case="14" data-priority="important">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 14</span>
+              <span class="badge badge-important">🟡 Importante</span>
+              <span class="status-pill status-pending" id="status-14">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Urgencia · dolor agudo</h4>
+            <p class="text-sm text-white mt-2">Mensajes de dolor agudo → handoff prioritario + captura <code>urgencia = urgente</code>.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c14-1"><span class="check-label">Mandé <em>"tengo un dolor terrible, no aguanto"</em> → bot derivó con prioridad</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c14-2"><span class="check-label">CF <code>urgencia</code> = "urgente"</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c14-3"><span class="check-label">Atena recibió alerta diferenciable (vs handoff normal)</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('14','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('14','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('14','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 15 -->
+      <article id="caso-15" class="case-card mb-5" data-case="15" data-priority="important">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 15</span>
+              <span class="badge badge-important">🟡 Importante</span>
+              <span class="status-pill status-pending" id="status-15">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Mensaje ambiguo · pide clarificación</h4>
+            <p class="text-sm text-white mt-2">Lead manda algo vago. Bot debe pedir clarificación de manera amable, NO asumir.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c15-1"><span class="check-label">Mandé <em>"necesito algo en los dientes"</em> / solo "hola" / solo "?" → bot pidió clarificación</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c15-2"><span class="check-label">Bot NO asumió tratamiento por su cuenta</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c15-3"><span class="check-label">Respuesta fue cálida, no robótica ("contame un poco más para orientarte mejor")</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('15','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('15','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('15','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 16 -->
+      <article id="caso-16" class="case-card mb-5" data-case="16" data-priority="important">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 16</span>
+              <span class="badge badge-important">🟡 Importante</span>
+              <span class="status-pill status-pending" id="status-16">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Tratamiento NO ofrecido (confirmar con Stefi qué SÍ y qué NO)</h4>
+            <p class="text-sm text-white mt-2">Si lead pregunta por algo que GAM no hace (ej. ortodoncia), bot debe ser honesto, no inventar.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c16-1"><span class="check-label">Mandé <em>"hacen ortodoncia?"</em> (verificar con Stefi si lo ofrecen o no)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c16-2"><span class="check-label">Bot respondió honesto: derivó al equipo o aclaró qué SÍ se ofrece</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c16-3"><span class="check-label">NO inventó "sí, hacemos ortodoncia" sin tenerlo en KB</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('16','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('16','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('16','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 17 -->
+      <article id="caso-17" class="case-card mb-5" data-case="17" data-priority="important">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 17</span>
+              <span class="badge badge-important">🟡 Importante</span>
+              <span class="status-pill status-pending" id="status-17">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Reactivación después de Stop Bot</h4>
+            <p class="text-sm text-white mt-2">Lead vuelve a escribir después del cooldown → bot retoma sin pedir saludo de nuevo.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c17-1"><span class="check-label">Disparé Stop Bot (caso 10 o 11) y esperé que venza cooldown</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c17-2"><span class="check-label">Mandé mensaje → bot reactivó y respondió contextualmente</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c17-3"><span class="check-label">Bot NO mandó la bienvenida de nuevo (no recomienza el flujo desde cero)</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('17','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('17','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('17','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- 🟢 NICE-TO-HAVE -->
+      <h3 class="text-xl font-semibold text-white mb-5 mt-12">🟢 Nice-to-have · KB pendiente, no bloquean go-live</h3>
+
+      <!-- Caso 18 -->
+      <article id="caso-18" class="case-card mb-5" data-case="18" data-priority="nice">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 18</span>
+              <span class="badge badge-nice">🟢 Nice-to-have</span>
+              <span class="status-pill status-pending" id="status-18">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Horarios de atención</h4>
+            <p class="text-sm text-white mt-2">⚠️ Stefi tiene que pasar los horarios formales. Hasta entonces el bot va a caer en Handoff No Sé.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c18-1"><span class="check-label">Pregunté <em>"qué horarios tienen?"</em> → respuesta correcta DESPUÉS que Stefi cargue la KB</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c18-2"><span class="check-label">Hasta entonces: bot deriva a Atena con handoff_no_se ✓</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('18','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('18','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('18','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 19 -->
+      <article id="caso-19" class="case-card mb-5" data-case="19" data-priority="nice">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 19</span>
+              <span class="badge badge-nice">🟢 Nice-to-have</span>
+              <span class="status-pill status-pending" id="status-19">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Obras sociales activas</h4>
+            <p class="text-sm text-white mt-2">⚠️ Stefi tiene que pasar listado de convenios. Es de las preguntas más frecuentes.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c19-1"><span class="check-label">Pregunté <em>"aceptan OSDE / Galeno / IOMA?"</em> → bot responde con listado de convenios reales (post-KB)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c19-2"><span class="check-label">Bot NO confirma obra social que no acepten (verificación crítica)</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('19','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('19','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('19','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 20 -->
+      <article id="caso-20" class="case-card mb-5" data-case="20" data-priority="nice">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 20</span>
+              <span class="badge badge-nice">🟢 Nice-to-have</span>
+              <span class="status-pill status-pending" id="status-20">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Política de garantía</h4>
+            <p class="text-sm text-white mt-2">⚠️ Stefi tiene que definir la política. Es una objeción típica.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c20-1"><span class="check-label">Pregunté <em>"tienen garantía?"</em> → bot responde con política oficial (post-KB)</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c20-2"><span class="check-label">Hasta entonces: handoff_no_se ✓</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('20','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('20','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('20','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Caso 21 -->
+      <article id="caso-21" class="case-card mb-5" data-case="21" data-priority="nice">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-white">Caso 21</span>
+              <span class="badge badge-nice">🟢 Nice-to-have</span>
+              <span class="status-pill status-pending" id="status-21">Pendiente</span>
+            </div>
+            <h4 class="text-xl font-semibold text-white">Audio de WhatsApp</h4>
+            <p class="text-sm text-white mt-2">⚠️ Definir comportamiento: ¿bot transcribe (Whisper API) o handoff directo? Decisión pendiente.</p>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">✅ Checklist</p>
+          <div class="space-y-1">
+            <label class="check-item"><input type="checkbox" data-key="c21-1"><span class="check-label">Mandé una nota de audio</span></label>
+            <label class="check-item"><input type="checkbox" data-key="c21-2"><span class="check-label">Comportamiento documentado y consistente (transcribe O handoff, no las dos cosas inconsistentemente)</span></label>
+          </div>
+        </div>
+        <div class="case-actions"><button onclick="markCase('21','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('21','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('21','pending')" class="btn btn-reset">Reset</button></div>
+      </article>
+
+      <!-- Cómo correrlo -->
+      <div class="mt-10 rounded-2xl border border-violet-400/20 bg-violet-500/5 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-violet-300/80 mb-2">🛠 Cómo correr las pruebas</p>
+        <p class="text-sm text-white mb-2"><strong>Manual</strong> · usá un número WhatsApp distinto al de Atena/Stefi (sino el filtro <code>first_name vacío</code> no aplica). Llevá la pantalla abierta y andá tildando.</p>
+        <p class="text-sm text-white"><strong>Automatizado</strong> · usar la skill <code>/TEST-BOT-GHL</code> con runner Playwright (está armado para AL Odontología — adaptable a GAM ajustando ~3 YAMLs).</p>
+      </div>
+    </section>
+
     <footer class="mt-32 pt-8 border-t border-white/[0.06] text-sm text-white">
       <p>Blueprint operativo · construido a partir de <a href="../knowledge/bot-atena-v0.md" class="font-mono text-white hover:text-violet-300 underline-offset-4 hover:underline">bot-atena-v0.md</a> · complemento del <a href="KICKOFF-VISUAL.html" class="font-mono text-white hover:text-violet-300 underline-offset-4 hover:underline">kickoff visual</a></p>
-      <p class="mt-2 text-xs">v1 · 2026-05-09 · AL Consulting · GAM Odontología — extendido con Knowledge Base + WhatsApp Meta + Pricing + Roadmap + Riesgos + Checklist</p>
+      <p class="mt-2 text-xs">v1 · 2026-05-09 · AL Consulting · GAM Odontología — extendido con Knowledge Base + WhatsApp Meta + Pricing + Roadmap + Riesgos + Checklist + Test plan</p>
     </footer>
 
   </main>
@@ -2404,6 +3081,115 @@ Variables:
     });
     wrap.appendChild(btn);
   });
+
+  // === SECCIÓN 11 · Test plan interactivo (localStorage + status + filters + progress + export) ===
+  const TEST_STORAGE_KEY = 'gam-test-bot-v1';
+  const TOTAL_TEST_CASES = 21;
+  let testState = JSON.parse(localStorage.getItem(TEST_STORAGE_KEY) || '{"checks":{},"cases":{}}');
+
+  function saveTestState() { localStorage.setItem(TEST_STORAGE_KEY, JSON.stringify(testState)); }
+
+  function markCase(caseId, status) {
+    testState.cases[caseId] = status;
+    saveTestState();
+    applyCaseStatus(caseId);
+    updateTestProgress();
+  }
+
+  function applyCaseStatus(caseId) {
+    const card = document.querySelector(`[data-case="${caseId}"]`);
+    const pill = document.getElementById(`status-${caseId}`);
+    const status = testState.cases[caseId] || 'pending';
+    if (card) card.dataset.status = status;
+    if (pill) {
+      pill.className = 'status-pill status-' + status;
+      pill.textContent = status === 'passed' ? '✓ Pasado' : status === 'failed' ? '✗ Fallido' : 'Pendiente';
+    }
+  }
+
+  function applyAllTestStatuses() {
+    for (let i = 1; i <= TOTAL_TEST_CASES; i++) applyCaseStatus(String(i));
+  }
+
+  function bindTestCheckboxes() {
+    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => {
+      const key = cb.dataset.key;
+      if (testState.checks[key]) cb.checked = true;
+      cb.addEventListener('change', () => {
+        testState.checks[key] = cb.checked;
+        saveTestState();
+      });
+    });
+  }
+
+  function updateTestProgress() {
+    const allCases = Array.from({length: TOTAL_TEST_CASES}, (_, i) => String(i + 1));
+    const passed = allCases.filter(c => testState.cases[c] === 'passed').length;
+    const failed = allCases.filter(c => testState.cases[c] === 'failed').length;
+    const completed = passed + failed;
+    const numEl = document.getElementById('progressNum');
+    const circle = document.getElementById('progressCircle');
+    if (numEl) numEl.textContent = `${completed}/${TOTAL_TEST_CASES}`;
+    if (circle) {
+      const circumference = 2 * Math.PI * 20;
+      const offset = circumference - (completed / TOTAL_TEST_CASES) * circumference;
+      circle.style.strokeDashoffset = offset;
+      if (failed > 0) circle.style.stroke = '#F87171';
+      else if (completed === TOTAL_TEST_CASES) circle.style.stroke = '#4ADE80';
+      else circle.style.stroke = '#8B5CF6';
+    }
+  }
+
+  function filterTests(filter) {
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    const activePill = document.querySelector(`.filter-pill[data-filter="${filter}"]`);
+    if (activePill) activePill.classList.add('active');
+    document.querySelectorAll('[data-case]').forEach(card => {
+      const status = testState.cases[card.dataset.case] || 'pending';
+      const priority = card.dataset.priority;
+      let show = true;
+      if (filter === 'pending' && status !== 'pending') show = false;
+      else if (filter === 'passed' && status !== 'passed') show = false;
+      else if (filter === 'failed' && status !== 'failed') show = false;
+      else if (['critical','important','nice'].includes(filter) && priority !== filter) show = false;
+      card.dataset.hidden = show ? 'false' : 'true';
+    });
+  }
+
+  function resetAllTests() {
+    if (!confirm('¿Borrar TODOS los tests y empezar de cero? Esta acción no se puede deshacer.')) return;
+    localStorage.removeItem(TEST_STORAGE_KEY);
+    testState = { checks: {}, cases: {} };
+    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => cb.checked = false);
+    applyAllTestStatuses();
+    updateTestProgress();
+  }
+
+  function exportTestResults() {
+    const allCases = Array.from({length: TOTAL_TEST_CASES}, (_, i) => String(i + 1));
+    const passed = allCases.filter(c => testState.cases[c] === 'passed').length;
+    const failed = allCases.filter(c => testState.cases[c] === 'failed').length;
+    const pending = TOTAL_TEST_CASES - passed - failed;
+    const result = {
+      cliente: 'GAM Odontología',
+      bot: 'Athena',
+      timestamp: new Date().toISOString(),
+      summary: { total: TOTAL_TEST_CASES, passed, failed, pending },
+      cases: testState.cases,
+      checks: testState.checks
+    };
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `test-bot-gam-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  bindTestCheckboxes();
+  applyAllTestStatuses();
+  updateTestProgress();
 </script>
 
 </body>

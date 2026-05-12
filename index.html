@@ -278,7 +278,10 @@
     .filter-pill { padding: 6px 14px; border-radius: 999px; font-family: 'Geist Mono', monospace; font-size: 11px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; background: rgba(255,255,255,0.04); color: #A1A1AA; }
     .filter-pill:hover { background: rgba(255,255,255,0.08); color: #E4E4E7; }
     .filter-pill.active { background: rgba(139,92,246,0.18); border-color: rgba(139,92,246,0.4); color: #C4B5FD; }
-    .progress-ring { transform: rotate(-90deg); }
+    .tester-note { width: 100%; min-height: 70px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: #E4E4E7; padding: 10px 12px; border-radius: 8px; font-family: inherit; font-size: 12px; line-height: 1.5; resize: vertical; transition: border-color 0.15s; }
+    .tester-note:focus { outline: none; border-color: rgba(139,92,246,0.4); }
+    .tester-note::placeholder { color: rgba(255,255,255,0.3); }
+        .progress-ring { transform: rotate(-90deg); }
     .progress-ring circle { transition: stroke-dashoffset 0.3s ease; }
   </style>
 </head>
@@ -2473,6 +2476,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c1-4"><span class="check-label">Bot NO escribió "¿..." ni "¡..." (solo signos de cierre)</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="1" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('1','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('1','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('1','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2498,6 +2509,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c2-4"><span class="check-label">CF <code>motivo_consulta</code> también se llenó con frase corta del lead</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="2" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('2','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('2','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('2','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2536,6 +2555,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c3-5"><span class="check-label">Contacto se movió a etapa <code>🔵 Lead levanta la mano</code></span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="3" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('3','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('3','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('3','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2573,6 +2600,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c4-4"><span class="check-label">Bot Athena pasó a <code>Inactive</code></span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="4" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('4','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('4','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('4','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2598,6 +2633,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c5-4"><span class="check-label">Atena recibió la pregunta del lead para responder</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="5" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('5','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('5','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('5','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2623,6 +2666,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c6-4"><span class="check-label">Tag <code>transferencia a humano</code> aplicado · Atena notificada con prioridad</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="6" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('6','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('6','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('6','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2660,6 +2711,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c7-4"><span class="check-label">Mantuvo persona "Athena" + reorientó la conversación</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="7" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('7','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('7','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('7','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2686,6 +2745,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c8-4"><span class="check-label">NO dio ningún número de tratamiento específico (solo $40k consulta + $20k seña son OK)</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="8" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('8','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('8','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('8','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2712,6 +2779,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c9-4"><span class="check-label">⚠️ Importante: chequear que el bot NO lea la address placeholder de GHL (<em>"1209 Mountain Rd, Albuquerque NM"</em>) — esto es un default que hay que cambiar en Settings → Business Profile</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="9" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('9','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('9','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('9','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2737,6 +2812,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c10-4"><span class="check-label">Esperé &gt;60min y escribí → bot reactivó y respondió</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="10" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('10','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('10','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('10','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2761,6 +2844,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c11-3"><span class="check-label">Bot Athena pasó a <code>Inactive</code> por 24h</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="11" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('11','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('11','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('11','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2786,6 +2877,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c12-4"><span class="check-label">Tag <code>no-responde</code> aplicado · WF <code>2- LEAD NO RESPONDE</code> ejecutó correcto</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="12" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('12','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('12','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('12','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2812,6 +2911,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c13-2"><span class="check-label">Caso B: contacto existente (first_name lleno) → bot NO Activa, mensaje queda para Atena</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="13" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('13','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('13','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('13','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2836,6 +2943,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c14-3"><span class="check-label">Atena recibió alerta diferenciable (vs handoff normal)</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="14" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('14','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('14','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('14','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2860,6 +2975,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c15-3"><span class="check-label">Respuesta fue cálida, no robótica ("contame un poco más para orientarte mejor")</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="15" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('15','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('15','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('15','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2884,6 +3007,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c16-3"><span class="check-label">NO inventó "sí, hacemos ortodoncia" sin tenerlo en KB</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="16" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('16','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('16','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('16','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2908,6 +3039,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c17-3"><span class="check-label">Bot NO mandó la bienvenida de nuevo (no recomienza el flujo desde cero)</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="17" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('17','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('17','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('17','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2934,6 +3073,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c18-2"><span class="check-label">Hasta entonces: bot deriva a Atena con handoff_no_se ✓</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="18" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('18','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('18','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('18','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2957,6 +3104,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c19-2"><span class="check-label">Bot NO confirma obra social que no acepten (verificación crítica)</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="19" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('19','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('19','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('19','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -2980,6 +3135,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c20-2"><span class="check-label">Hasta entonces: handoff_no_se ✓</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="20" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('20','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('20','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('20','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -3003,6 +3166,14 @@ Variables:
             <label class="check-item"><input type="checkbox" data-key="c21-2"><span class="check-label">Comportamiento documentado y consistente (transcribe O handoff, no las dos cosas inconsistentemente)</span></label>
           </div>
         </div>
+        <div class="mt-4">
+
+          <p class="font-mono text-[10px] uppercase tracking-wider text-white mb-2">📝 Notas del tester (opcional)</p>
+
+          <textarea data-note="21" class="tester-note" placeholder="Observaciones, bugs encontrados, screenshots a adjuntar después, lo que sea relevante..."></textarea>
+
+        </div>
+
         <div class="case-actions"><button onclick="markCase('21','passed')" class="btn btn-pass">✓ Pasado</button><button onclick="markCase('21','failed')" class="btn btn-fail">✗ Fallido</button><button onclick="markCase('21','pending')" class="btn btn-reset">Reset</button></div>
       </article>
 
@@ -3085,7 +3256,8 @@ Variables:
   // === SECCIÓN 11 · Test plan interactivo (localStorage + status + filters + progress + export) ===
   const TEST_STORAGE_KEY = 'gam-test-bot-v1';
   const TOTAL_TEST_CASES = 21;
-  let testState = JSON.parse(localStorage.getItem(TEST_STORAGE_KEY) || '{"checks":{},"cases":{}}');
+  let testState = JSON.parse(localStorage.getItem(TEST_STORAGE_KEY) || '{"checks":{},"cases":{},"notes":{}}');
+  if (!testState.notes) testState.notes = {};
 
   function saveTestState() { localStorage.setItem(TEST_STORAGE_KEY, JSON.stringify(testState)); }
 
@@ -3159,8 +3331,9 @@ Variables:
   function resetAllTests() {
     if (!confirm('¿Borrar TODOS los tests y empezar de cero? Esta acción no se puede deshacer.')) return;
     localStorage.removeItem(TEST_STORAGE_KEY);
-    testState = { checks: {}, cases: {} };
+    testState = { checks: {}, cases: {}, notes: {} };
     document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('textarea[data-note]').forEach(ta => ta.value = '');
     applyAllTestStatuses();
     updateTestProgress();
   }
@@ -3176,7 +3349,8 @@ Variables:
       timestamp: new Date().toISOString(),
       summary: { total: TOTAL_TEST_CASES, passed, failed, pending },
       cases: testState.cases,
-      checks: testState.checks
+      checks: testState.checks,
+      notes: testState.notes
     };
     const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -3187,7 +3361,19 @@ Variables:
     URL.revokeObjectURL(url);
   }
 
+  function bindTesterNotes() {
+    document.querySelectorAll('textarea[data-note]').forEach(ta => {
+      const key = ta.dataset.note;
+      if (testState.notes[key]) ta.value = testState.notes[key];
+      ta.addEventListener('input', () => {
+        testState.notes[key] = ta.value;
+        saveTestState();
+      });
+    });
+  }
+
   bindTestCheckboxes();
+  bindTesterNotes();
   applyAllTestStatuses();
   updateTestProgress();
 </script>
